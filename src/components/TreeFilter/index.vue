@@ -3,16 +3,10 @@
     <h4 v-if="title" class="title sle">
       {{ title }}
     </h4>
-    <el-input
-      v-model="filterText"
-      placeholder="输入关键字进行过滤"
-      clearable
-    />
+    <el-input v-model="filterText" placeholder="输入关键字进行过滤" clearable />
     <el-scrollbar
       :style="{
-        height: title
-          ? `calc(100% - 95px)`
-          : `calc(100% - 56px)`
+        height: title ? `calc(100% - 95px)` : `calc(100% - 56px)`
       }"
     >
       <el-tree
@@ -22,17 +16,13 @@
         :data="multiple ? treeData : treeAllData"
         :show-checkbox="multiple"
         :check-strictly="false"
-        :current-node-key="
-          !multiple ? selected : ''
-        "
+        :current-node-key="!multiple ? selected : ''"
         :highlight-current="!multiple"
         :expand-on-click-node="false"
         :check-on-click-node="multiple"
         :props="defaultProps"
         :filter-node-method="filterNode"
-        :default-checked-keys="
-          multiple ? selected : []
-        "
+        :default-checked-keys="multiple ? selected : []"
         @node-click="handleNodeClick"
         @check="handleCheckChange"
       >
@@ -49,12 +39,7 @@
 </template>
 
 <script setup lang="ts" name="TreeFilter">
-import {
-  ref,
-  watch,
-  onBeforeMount,
-  nextTick
-} from "vue";
+import { ref, watch, onBeforeMount, nextTick } from "vue";
 import { ElTree } from "element-plus";
 
 // 接收父组件参数并设置默认值
@@ -67,42 +52,25 @@ interface TreeFilterProps {
   multiple?: boolean; // 是否为多选 ==> 非必传，默认为 false
   defaultValue?: any; // 默认选中的值 ==> 非必传
 }
-const props = withDefaults(
-  defineProps<TreeFilterProps>(),
-  {
-    id: "id",
-    label: "label",
-    multiple: false
-  }
-);
+const props = withDefaults(defineProps<TreeFilterProps>(), {
+  id: "id",
+  label: "label",
+  multiple: false
+});
 
 const defaultProps = {
   children: "children",
   label: props.label
 };
 
-const treeRef =
-  ref<InstanceType<typeof ElTree>>();
-const treeData = ref<{ [key: string]: any }[]>(
-  []
-);
-const treeAllData = ref<{ [key: string]: any }[]>(
-  []
-);
+const treeRef = ref<InstanceType<typeof ElTree>>();
+const treeData = ref<{ [key: string]: any }[]>([]);
+const treeAllData = ref<{ [key: string]: any }[]>([]);
 
 const selected = ref();
 const setSelected = () => {
-  if (props.multiple)
-    selected.value = Array.isArray(
-      props.defaultValue
-    )
-      ? props.defaultValue
-      : [props.defaultValue];
-  else
-    selected.value =
-      typeof props.defaultValue === "string"
-        ? props.defaultValue
-        : "";
+  if (props.multiple) selected.value = Array.isArray(props.defaultValue) ? props.defaultValue : [props.defaultValue];
+  else selected.value = typeof props.defaultValue === "string" ? props.defaultValue : "";
 };
 
 onBeforeMount(async () => {
@@ -110,10 +78,7 @@ onBeforeMount(async () => {
   if (props.requestApi) {
     const { data } = await props.requestApi!();
     treeData.value = data;
-    treeAllData.value = [
-      { id: "", [props.label]: "全部" },
-      ...data
-    ];
+    treeAllData.value = [{ id: "", [props.label]: "全部" }, ...data];
   }
 });
 
@@ -129,10 +94,7 @@ watch(
   () => {
     if (props.data?.length) {
       treeData.value = props.data;
-      treeAllData.value = [
-        { id: "", [props.label]: "全部" },
-        ...props.data
-      ];
+      treeAllData.value = [{ id: "", [props.label]: "全部" }, ...props.data];
     }
   },
   { deep: true, immediate: true }
@@ -144,11 +106,7 @@ watch(filterText, val => {
 });
 
 // 过滤
-const filterNode = (
-  value: string,
-  data: { [key: string]: any },
-  node: any
-) => {
+const filterNode = (value: string, data: { [key: string]: any }, node: any) => {
   if (!value) return true;
   let parentNode = node.parent,
     labels = [node.label],
@@ -158,9 +116,7 @@ const filterNode = (
     parentNode = parentNode.parent;
     level++;
   }
-  return labels.some(
-    label => label.indexOf(value) !== -1
-  );
+  return labels.some(label => label.indexOf(value) !== -1);
 };
 
 interface FilterEmits {
@@ -169,9 +125,7 @@ interface FilterEmits {
 const emit = defineEmits<FilterEmits>();
 
 // 单选
-const handleNodeClick = (data: {
-  [key: string]: any;
-}) => {
+const handleNodeClick = (data: { [key: string]: any }) => {
   if (props.multiple) return;
   emit("change", data[props.id]);
 };

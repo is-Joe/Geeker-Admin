@@ -9,9 +9,7 @@ import { FieldNamesProps } from "@/components/ProTable/interface";
 export function localGet(key: string) {
   const value = window.localStorage.getItem(key);
   try {
-    return JSON.parse(
-      window.localStorage.getItem(key) as string
-    );
+    return JSON.parse(window.localStorage.getItem(key) as string);
   } catch (error) {
     return value;
   }
@@ -23,14 +21,8 @@ export function localGet(key: string) {
  * @param {*} value Storage值
  * @returns {void}
  */
-export function localSet(
-  key: string,
-  value: any
-) {
-  window.localStorage.setItem(
-    key,
-    JSON.stringify(value)
-  );
+export function localSet(key: string, value: any) {
+  window.localStorage.setItem(key, JSON.stringify(value));
 }
 
 /**
@@ -58,11 +50,7 @@ export function localClear() {
 export function isType(val: any) {
   if (val === null) return "null";
   if (typeof val !== "object") return typeof val;
-  else
-    return Object.prototype.toString
-      .call(val)
-      .slice(8, -1)
-      .toLocaleLowerCase();
+  else return Object.prototype.toString.call(val).slice(8, -1).toLocaleLowerCase();
 }
 
 /**
@@ -73,20 +61,8 @@ export function generateUUID() {
   let uuid = "";
   for (let i = 0; i < 32; i++) {
     let random = (Math.random() * 16) | 0;
-    if (
-      i === 8 ||
-      i === 12 ||
-      i === 16 ||
-      i === 20
-    )
-      uuid += "-";
-    uuid += (
-      i === 12
-        ? 4
-        : i === 16
-        ? (random & 3) | 8
-        : random
-    ).toString(16);
+    if (i === 8 || i === 12 || i === 16 || i === 20) uuid += "-";
+    uuid += (i === 12 ? 4 : i === 16 ? (random & 3) | 8 : random).toString(16);
   }
   return uuid;
 }
@@ -97,23 +73,18 @@ export function generateUUID() {
  * @param {Object} b 要比较的对象二
  * @returns {Boolean} 相同返回 true，反之 false
  */
-export function isObjectValueEqual(
-  a: { [key: string]: any },
-  b: { [key: string]: any }
-) {
+export function isObjectValueEqual(a: { [key: string]: any }, b: { [key: string]: any }) {
   if (!a || !b) return false;
   let aProps = Object.getOwnPropertyNames(a);
   let bProps = Object.getOwnPropertyNames(b);
-  if (aProps.length != bProps.length)
-    return false;
+  if (aProps.length != bProps.length) return false;
   for (let i = 0; i < aProps.length; i++) {
     let propName = aProps[i];
     let propA = a[propName];
     let propB = b[propName];
     if (!b.hasOwnProperty(propName)) return false;
     if (propA instanceof Object) {
-      if (!isObjectValueEqual(propA, propB))
-        return false;
+      if (!isObjectValueEqual(propA, propB)) return false;
     } else if (propA !== propB) {
       return false;
     }
@@ -127,13 +98,8 @@ export function isObjectValueEqual(
  * @param {Number} max 最大值
  * @returns {Number}
  */
-export function randomNum(
-  min: number,
-  max: number
-): number {
-  let num = Math.floor(
-    Math.random() * (min - max) + max
-  );
+export function randomNum(min: number, max: number): number {
+  let num = Math.floor(Math.random() * (min - max) + max);
   return num;
 }
 
@@ -144,16 +110,11 @@ export function randomNum(
 export function getTimeState() {
   let timeNow = new Date();
   let hours = timeNow.getHours();
-  if (hours >= 6 && hours <= 10)
-    return `早上好 ⛅`;
-  if (hours >= 10 && hours <= 14)
-    return `中午好 🌞`;
-  if (hours >= 14 && hours <= 18)
-    return `下午好 🌞`;
-  if (hours >= 18 && hours <= 24)
-    return `晚上好 🌛`;
-  if (hours >= 0 && hours <= 6)
-    return `凌晨好 🌛`;
+  if (hours >= 6 && hours <= 10) return `早上好 ⛅`;
+  if (hours >= 10 && hours <= 14) return `中午好 🌞`;
+  if (hours >= 14 && hours <= 18) return `下午好 🌞`;
+  if (hours >= 18 && hours <= 24) return `晚上好 🌛`;
+  if (hours >= 0 && hours <= 6) return `凌晨好 🌛`;
 }
 
 /**
@@ -161,15 +122,9 @@ export function getTimeState() {
  * @returns {String}
  */
 export function getBrowserLang() {
-  let browserLang = navigator.language
-    ? navigator.language
-    : navigator.browserLanguage;
+  let browserLang = navigator.language ? navigator.language : navigator.browserLanguage;
   let defaultBrowserLang = "";
-  if (
-    ["cn", "zh", "zh-cn"].includes(
-      browserLang.toLowerCase()
-    )
-  ) {
+  if (["cn", "zh", "zh-cn"].includes(browserLang.toLowerCase())) {
     defaultBrowserLang = "zh";
   } else {
     defaultBrowserLang = "en";
@@ -182,17 +137,9 @@ export function getBrowserLang() {
  * @param {Array} menuList 菜单列表
  * @returns {Array}
  */
-export function getFlatMenuList(
-  menuList: Menu.MenuOptions[]
-): Menu.MenuOptions[] {
-  let newMenuList: Menu.MenuOptions[] =
-    JSON.parse(JSON.stringify(menuList));
-  return newMenuList.flatMap(item => [
-    item,
-    ...(item.children
-      ? getFlatMenuList(item.children)
-      : [])
-  ]);
+export function getFlatMenuList(menuList: Menu.MenuOptions[]): Menu.MenuOptions[] {
+  let newMenuList: Menu.MenuOptions[] = JSON.parse(JSON.stringify(menuList));
+  return newMenuList.flatMap(item => [item, ...(item.children ? getFlatMenuList(item.children) : [])]);
 }
 
 /**
@@ -200,16 +147,10 @@ export function getFlatMenuList(
  * @param {Array} menuList 菜单列表
  * @returns {Array}
  * */
-export function getShowMenuList(
-  menuList: Menu.MenuOptions[]
-) {
-  let newMenuList: Menu.MenuOptions[] =
-    JSON.parse(JSON.stringify(menuList));
+export function getShowMenuList(menuList: Menu.MenuOptions[]) {
+  let newMenuList: Menu.MenuOptions[] = JSON.parse(JSON.stringify(menuList));
   return newMenuList.filter(item => {
-    item.children?.length &&
-      (item.children = getShowMenuList(
-        item.children
-      ));
+    item.children?.length && (item.children = getShowMenuList(item.children));
     return !item.meta?.isHide;
   });
 }
@@ -228,12 +169,7 @@ export const getAllBreadcrumbList = (
 ) => {
   for (const item of menuList) {
     result[item.path] = [...parent, item];
-    if (item.children)
-      getAllBreadcrumbList(
-        item.children,
-        result[item.path],
-        result
-      );
+    if (item.children) getAllBreadcrumbList(item.children, result[item.path], result);
   }
   return result;
 };
@@ -244,15 +180,10 @@ export const getAllBreadcrumbList = (
  * @param {Array} menuPathArr 菜单地址的一维数组 ['**','**']
  * @returns {Array}
  */
-export function getMenuListPath(
-  menuList: Menu.MenuOptions[],
-  menuPathArr: string[] = []
-): string[] {
+export function getMenuListPath(menuList: Menu.MenuOptions[], menuPathArr: string[] = []): string[] {
   for (const item of menuList) {
-    if (typeof item === "object" && item.path)
-      menuPathArr.push(item.path);
-    if (item.children?.length)
-      getMenuListPath(item.children, menuPathArr);
+    if (typeof item === "object" && item.path) menuPathArr.push(item.path);
+    if (item.children?.length) getMenuListPath(item.children, menuPathArr);
   }
   return menuPathArr;
 }
@@ -263,17 +194,11 @@ export function getMenuListPath(
  * @param {String} path 当前访问地址
  * @returns {Object | null}
  */
-export function findMenuByPath(
-  menuList: Menu.MenuOptions[],
-  path: string
-): Menu.MenuOptions | null {
+export function findMenuByPath(menuList: Menu.MenuOptions[], path: string): Menu.MenuOptions | null {
   for (const item of menuList) {
     if (item.path === path) return item;
     if (item.children) {
-      const res = findMenuByPath(
-        item.children,
-        path
-      );
+      const res = findMenuByPath(item.children, path);
       if (res) return res;
     }
   }
@@ -286,19 +211,10 @@ export function findMenuByPath(
  * @param {Array} keepAliveNameArr 缓存的菜单 name ['**','**']
  * @returns {Array}
  * */
-export function getKeepAliveRouterName(
-  menuList: Menu.MenuOptions[],
-  keepAliveNameArr: string[] = []
-) {
+export function getKeepAliveRouterName(menuList: Menu.MenuOptions[], keepAliveNameArr: string[] = []) {
   menuList.forEach(item => {
-    item.meta.isKeepAlive &&
-      item.name &&
-      keepAliveNameArr.push(item.name);
-    item.children?.length &&
-      getKeepAliveRouterName(
-        item.children,
-        keepAliveNameArr
-      );
+    item.meta.isKeepAlive && item.name && keepAliveNameArr.push(item.name);
+    item.children?.length && getKeepAliveRouterName(item.children, keepAliveNameArr);
   });
   return keepAliveNameArr;
 }
@@ -310,16 +226,9 @@ export function getKeepAliveRouterName(
  * @param {*} callValue 当前单元格值
  * @returns {String}
  * */
-export function formatTableColumn(
-  row: number,
-  col: number,
-  callValue: any
-) {
+export function formatTableColumn(row: number, col: number, callValue: any) {
   // 如果当前值为数组，使用 / 拼接（根据需求自定义）
-  if (isArray(callValue))
-    return callValue.length
-      ? callValue.join(" / ")
-      : "--";
+  if (isArray(callValue)) return callValue.length ? callValue.join(" / ") : "--";
   return callValue ?? "--";
 }
 
@@ -330,10 +239,7 @@ export function formatTableColumn(
  * */
 export function formatValue(callValue: any) {
   // 如果当前值为数组，使用 / 拼接（根据需求自定义）
-  if (isArray(callValue))
-    return callValue.length
-      ? callValue.join(" / ")
-      : "--";
+  if (isArray(callValue)) return callValue.length ? callValue.join(" / ") : "--";
   return callValue ?? "--";
 }
 
@@ -343,15 +249,9 @@ export function formatValue(callValue: any) {
  * @param {String} prop 当前 prop
  * @returns {*}
  * */
-export function handleRowAccordingToProp(
-  row: { [key: string]: any },
-  prop: string
-) {
-  if (!prop.includes("."))
-    return row[prop] ?? "--";
-  prop
-    .split(".")
-    .forEach(item => (row = row[item] ?? "--"));
+export function handleRowAccordingToProp(row: { [key: string]: any }, prop: string) {
+  if (!prop.includes(".")) return row[prop] ?? "--";
+  prop.split(".").forEach(item => (row = row[item] ?? "--"));
   return row;
 }
 
@@ -374,30 +274,16 @@ export function handleProp(prop: string) {
  * @param {String} type 过滤类型（目前只有 tag）
  * @returns {String}
  * */
-export function filterEnum(
-  callValue: any,
-  enumData?: any,
-  fieldNames?: FieldNamesProps,
-  type?: "tag"
-) {
+export function filterEnum(callValue: any, enumData?: any, fieldNames?: FieldNamesProps, type?: "tag") {
   const value = fieldNames?.value ?? "value";
   const label = fieldNames?.label ?? "label";
-  const children =
-    fieldNames?.children ?? "children";
+  const children = fieldNames?.children ?? "children";
   let filterData: { [key: string]: any } = {};
   // 判断 enumData 是否为数组
-  if (Array.isArray(enumData))
-    filterData = findItemNested(
-      enumData,
-      callValue,
-      value,
-      children
-    );
+  if (Array.isArray(enumData)) filterData = findItemNested(enumData, callValue, value, children);
   // 判断是否输出的结果为 tag 类型
   if (type == "tag") {
-    return filterData?.tagType
-      ? filterData.tagType
-      : "";
+    return filterData?.tagType ? filterData.tagType : "";
   } else {
     return filterData ? filterData[label] : "--";
   }
@@ -406,25 +292,10 @@ export function filterEnum(
 /**
  * @description 递归查找 callValue 对应的 enum 值
  * */
-export function findItemNested(
-  enumData: any,
-  callValue: any,
-  value: string,
-  children: string
-) {
-  return enumData.reduce(
-    (accumulator: any, current: any) => {
-      if (accumulator) return accumulator;
-      if (current[value] === callValue)
-        return current;
-      if (current[children])
-        return findItemNested(
-          current[children],
-          callValue,
-          value,
-          children
-        );
-    },
-    null
-  );
+export function findItemNested(enumData: any, callValue: any, value: string, children: string) {
+  return enumData.reduce((accumulator: any, current: any) => {
+    if (accumulator) return accumulator;
+    if (current[value] === callValue) return current;
+    if (current[children]) return findItemNested(current[children], callValue, value, children);
+  }, null);
 }

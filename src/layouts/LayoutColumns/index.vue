@@ -3,11 +3,7 @@
   <el-container class="layout">
     <div class="aside-split">
       <div class="logo flx-center">
-        <img
-          class="logo-img"
-          src="@/assets/images/logo.svg"
-          alt="logo"
-        />
+        <img class="logo-img" src="@/assets/images/logo.svg" alt="logo" />
       </div>
       <el-scrollbar>
         <div class="split-list">
@@ -16,22 +12,14 @@
             :key="item.path"
             class="split-item"
             :class="{
-              'split-active':
-                splitActive === item.path ||
-                `/${
-                  splitActive.split('/')[1]
-                }` === item.path
+              'split-active': splitActive === item.path || `/${splitActive.split('/')[1]}` === item.path
             }"
             @click="changeSubMenu(item)"
           >
             <el-icon>
-              <component
-                :is="item.meta.icon"
-              ></component>
+              <component :is="item.meta.icon"></component>
             </el-icon>
-            <span class="title">{{
-              item.meta.title
-            }}</span>
+            <span class="title">{{ item.meta.title }}</span>
           </div>
         </div>
       </el-scrollbar>
@@ -45,11 +33,7 @@
       }"
     >
       <div class="logo flx-center">
-        <span
-          v-show="subMenuList.length"
-          class="logo-text"
-          >{{ isCollapse ? "G" : title }}</span
-        >
+        <span v-show="subMenuList.length" class="logo-text">{{ isCollapse ? "G" : title }}</span>
       </div>
       <el-scrollbar>
         <el-menu
@@ -89,21 +73,10 @@ const route = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
 const globalStore = useGlobalStore();
-const accordion = computed(
-  () => globalStore.accordion
-);
-const isCollapse = computed(
-  () => globalStore.isCollapse
-);
-const menuList = computed(
-  () => authStore.showMenuListGet
-);
-const activeMenu = computed(
-  () =>
-    (route.meta.activeMenu
-      ? route.meta.activeMenu
-      : route.path) as string
-);
+const accordion = computed(() => globalStore.accordion);
+const isCollapse = computed(() => globalStore.isCollapse);
+const menuList = computed(() => authStore.showMenuListGet);
+const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu : route.path) as string);
 
 const subMenuList = ref<Menu.MenuOptions[]>([]);
 const splitActive = ref("");
@@ -113,18 +86,10 @@ watch(
     // 当前菜单没有数据直接 return
     if (!menuList.value.length) return;
     splitActive.value = route.path;
-    const menuItem = menuList.value.filter(
-      (item: Menu.MenuOptions) => {
-        return (
-          route.path === item.path ||
-          `/${route.path.split("/")[1]}` ===
-            item.path
-        );
-      }
-    );
-    if (menuItem[0].children?.length)
-      return (subMenuList.value =
-        menuItem[0].children);
+    const menuItem = menuList.value.filter((item: Menu.MenuOptions) => {
+      return route.path === item.path || `/${route.path.split("/")[1]}` === item.path;
+    });
+    if (menuItem[0].children?.length) return (subMenuList.value = menuItem[0].children);
     subMenuList.value = [];
   },
   {
@@ -134,12 +99,9 @@ watch(
 );
 
 // change SubMenu
-const changeSubMenu = (
-  item: Menu.MenuOptions
-) => {
+const changeSubMenu = (item: Menu.MenuOptions) => {
   splitActive.value = item.path;
-  if (item.children?.length)
-    return (subMenuList.value = item.children);
+  if (item.children?.length) return (subMenuList.value = item.children);
   subMenuList.value = [];
   router.push(item.path);
 };

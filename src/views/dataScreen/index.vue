@@ -3,29 +3,17 @@
     <div ref="dataScreenRef" class="dataScreen">
       <div class="dataScreen-header">
         <div class="header-lf">
-          <span
-            class="header-screening"
-            @click="router.push(HOME_URL)"
-            >首页</span
-          >
+          <span class="header-screening" @click="router.push(HOME_URL)">首页</span>
         </div>
         <div class="header-ct">
           <div class="header-ct-title">
-            <span
-              >智慧旅游可视化大数据展示平台</span
-            >
-            <div class="header-ct-warning">
-              平台高峰预警信息（2条）
-            </div>
+            <span>智慧旅游可视化大数据展示平台</span>
+            <div class="header-ct-warning">平台高峰预警信息（2条）</div>
           </div>
         </div>
         <div class="header-rg">
-          <span class="header-download"
-            >统计报告</span
-          >
-          <span class="header-time"
-            >当前时间：{{ time }}</span
-          >
+          <span class="header-download">统计报告</span>
+          <span class="header-time">当前时间：{{ time }}</span>
         </div>
       </div>
       <div class="dataScreen-main">
@@ -33,40 +21,27 @@
           <div class="dataScreen-top">
             <div class="dataScreen-main-title">
               <span>实时游客统计</span>
-              <img
-                src="./images/dataScreen-title.png"
-                alt=""
-              />
+              <img src="./images/dataScreen-title.png" alt="" />
             </div>
             <!-- chart区域 -->
             <div class="dataScreen-main-chart">
-              <RealTimeAccessChart
-                ref="RealTimeAccessRef"
-              />
+              <RealTimeAccessChart ref="RealTimeAccessRef" />
             </div>
           </div>
           <div class="dataScreen-center">
             <div class="dataScreen-main-title">
               <span>男女比例</span>
-              <img
-                src="./images/dataScreen-title.png"
-                alt=""
-              />
+              <img src="./images/dataScreen-title.png" alt="" />
             </div>
             <!-- chart区域 -->
             <div class="dataScreen-main-chart">
-              <MaleFemaleRatioChart
-                ref="MaleFemaleRatioRef"
-              />
+              <MaleFemaleRatioChart ref="MaleFemaleRatioRef" />
             </div>
           </div>
           <div class="dataScreen-bottom">
             <div class="dataScreen-main-title">
               <span>年龄比例</span>
-              <img
-                src="./images/dataScreen-title.png"
-                alt=""
-              />
+              <img src="./images/dataScreen-title.png" alt="" />
             </div>
             <!-- chart区域 -->
             <div class="dataScreen-main-chart">
@@ -76,9 +51,7 @@
         </div>
         <div class="dataScreen-ct">
           <div class="dataScreen-map">
-            <div class="dataScreen-map-title">
-              景区实时客流量
-            </div>
+            <div class="dataScreen-map-title">景区实时客流量</div>
             <!-- <vue3-seamless-scroll
 							:list="alarmData"
 							class="dataScreen-alarm"
@@ -98,16 +71,11 @@
           <div class="dataScreen-cb">
             <div class="dataScreen-main-title">
               <span>未来30天游客量趋势图</span>
-              <img
-                src="./images/dataScreen-title.png"
-                alt=""
-              />
+              <img src="./images/dataScreen-title.png" alt="" />
             </div>
             <!-- chart区域 -->
             <div class="dataScreen-main-chart">
-              <OverNext30Chart
-                ref="OverNext30Ref"
-              />
+              <OverNext30Chart ref="OverNext30Ref" />
             </div>
           </div>
         </div>
@@ -115,10 +83,7 @@
           <div class="dataScreen-top">
             <div class="dataScreen-main-title">
               <span>热门景区排行</span>
-              <img
-                src="./images/dataScreen-title.png"
-                alt=""
-              />
+              <img src="./images/dataScreen-title.png" alt="" />
             </div>
             <!-- chart区域 -->
             <div class="dataScreen-main-chart">
@@ -128,31 +93,21 @@
           <div class="dataScreen-center">
             <div class="dataScreen-main-title">
               <span>年度游客量对比</span>
-              <img
-                src="./images/dataScreen-title.png"
-                alt=""
-              />
+              <img src="./images/dataScreen-title.png" alt="" />
             </div>
             <!-- chart区域 -->
             <div class="dataScreen-main-chart">
-              <AnnualUseChart
-                ref="AnnualUseRef"
-              />
+              <AnnualUseChart ref="AnnualUseRef" />
             </div>
           </div>
           <div class="dataScreen-bottom">
             <div class="dataScreen-main-title">
               <span>预约渠道数据统计</span>
-              <img
-                src="./images/dataScreen-title.png"
-                alt=""
-              />
+              <img src="./images/dataScreen-title.png" alt="" />
             </div>
             <!-- chart区域 -->
             <div class="dataScreen-main-chart">
-              <PlatformSourceChart
-                ref="PlatformSourceRef"
-              />
+              <PlatformSourceChart ref="PlatformSourceRef" />
             </div>
           </div>
         </div>
@@ -162,12 +117,7 @@
 </template>
 
 <script setup lang="ts" name="dataScreen">
-import {
-  ref,
-  Ref,
-  onMounted,
-  onBeforeUnmount
-} from "vue";
+import { ref, Ref, onMounted, onBeforeUnmount } from "vue";
 import { HOME_URL } from "@/config";
 import { randomNum } from "@/utils";
 import { useRouter } from "vue-router";
@@ -183,9 +133,7 @@ import PlatformSourceChart from "./components/PlatformSourceChart.vue";
 import RealTimeAccessChart from "./components/RealTimeAccessChart.vue";
 
 const router = useRouter();
-const dataScreenRef = ref<HTMLElement | null>(
-  null
-);
+const dataScreenRef = ref<HTMLElement | null>(null);
 
 onMounted(() => {
   // 初始化时为外层盒子加上缩放属性，防止刷新界面时就已经缩放
@@ -201,10 +149,7 @@ onMounted(() => {
 });
 
 // 根据浏览器大小推断缩放比例
-const getScale = (
-  width = 1920,
-  height = 1080
-) => {
+const getScale = (width = 1920, height = 1080) => {
   let ww = window.innerWidth / width;
   let wh = window.innerHeight / height;
   return ww < wh ? ww : wh;
@@ -339,54 +284,15 @@ let platFromData = [
 let annualData = [
   {
     label: new Date().getFullYear() - 2 + "年",
-    value: [
-      "184",
-      "90",
-      "120",
-      "0",
-      "30",
-      "100",
-      "80",
-      "40",
-      "20",
-      "510",
-      "350",
-      "180"
-    ]
+    value: ["184", "90", "120", "0", "30", "100", "80", "40", "20", "510", "350", "180"]
   },
   {
     label: new Date().getFullYear() - 1 + "年",
-    value: [
-      "118",
-      "509",
-      "366",
-      "162",
-      "380",
-      "123",
-      "321",
-      "158",
-      "352",
-      "474",
-      "154",
-      "22"
-    ]
+    value: ["118", "509", "366", "162", "380", "123", "321", "158", "352", "474", "154", "22"]
   },
   {
     label: new Date().getFullYear() + "年",
-    value: [
-      "548",
-      "259",
-      "113",
-      "90",
-      "69",
-      "512",
-      "23",
-      "49",
-      "28",
-      "420",
-      "313",
-      "156"
-    ]
+    value: ["548", "259", "113", "90", "69", "512", "23", "49", "28", "420", "313", "156"]
   }
 ];
 let mapData = [
@@ -458,76 +364,34 @@ let mapData = [
 
 // 初始化 echarts
 const initCharts = (): void => {
-  dataScreen.chart1 =
-    RealTimeAccessRef.value?.initChart(
-      0.5
-    ) as ECharts;
-  dataScreen.chart2 =
-    AgeRatioRef.value?.initChart(
-      ageData
-    ) as ECharts;
-  dataScreen.chart3 =
-    AnnualUseRef.value?.initChart({
-      data: annualData,
-      unit: annualData.map(val => val.label),
-      columns: [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "10",
-        "11",
-        "12"
-      ],
-      colors: ["#FFA600", "#007AFE", "#FF4B7A"]
-    }) as ECharts;
-  dataScreen.chart4 =
-    HotPlateRef.value?.initChart({
-      data: hotData,
-      colors: [
-        "#1089E7",
-        "#F57474",
-        "#56D0E3",
-        "#F8B448",
-        "#8B78F6"
-      ]
-    }) as ECharts;
-  dataScreen.chart5 =
-    MaleFemaleRatioRef.value?.initChart({
-      man: 0.6,
-      woman: 0.4
-    }) as ECharts;
-  dataScreen.chart6 =
-    OverNext30Ref.value?.initChart({
-      unit: ["访问量"],
-      data: new Array(30).fill("").map(val => {
-        val = randomNum(1, 20000);
-        return val;
-      })
-    }) as ECharts;
-  dataScreen.chart7 =
-    PlatformSourceRef.value?.initChart({
-      data: platFromData,
-      colors: [
-        "#078dbc",
-        "#6ad40b",
-        "#6172fc",
-        "#1786ff",
-        "#ffbe2f",
-        "#4dc89d",
-        "#b797df",
-        "#ffd3aa"
-      ]
-    }) as ECharts;
-  dataScreen.mapChart =
-    MapChartRef.value?.initChart(
-      mapData
-    ) as ECharts;
+  dataScreen.chart1 = RealTimeAccessRef.value?.initChart(0.5) as ECharts;
+  dataScreen.chart2 = AgeRatioRef.value?.initChart(ageData) as ECharts;
+  dataScreen.chart3 = AnnualUseRef.value?.initChart({
+    data: annualData,
+    unit: annualData.map(val => val.label),
+    columns: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+    colors: ["#FFA600", "#007AFE", "#FF4B7A"]
+  }) as ECharts;
+  dataScreen.chart4 = HotPlateRef.value?.initChart({
+    data: hotData,
+    colors: ["#1089E7", "#F57474", "#56D0E3", "#F8B448", "#8B78F6"]
+  }) as ECharts;
+  dataScreen.chart5 = MaleFemaleRatioRef.value?.initChart({
+    man: 0.6,
+    woman: 0.4
+  }) as ECharts;
+  dataScreen.chart6 = OverNext30Ref.value?.initChart({
+    unit: ["访问量"],
+    data: new Array(30).fill("").map(val => {
+      val = randomNum(1, 20000);
+      return val;
+    })
+  }) as ECharts;
+  dataScreen.chart7 = PlatformSourceRef.value?.initChart({
+    data: platFromData,
+    colors: ["#078dbc", "#6ad40b", "#6172fc", "#1786ff", "#ffbe2f", "#4dc89d", "#b797df", "#ffd3aa"]
+  }) as ECharts;
+  dataScreen.mapChart = MapChartRef.value?.initChart(mapData) as ECharts;
 };
 
 // 获取当前时间
@@ -542,9 +406,7 @@ timer = setInterval(() => {
 onBeforeUnmount(() => {
   window.removeEventListener("resize", resize);
   clearInterval(timer!);
-  Object.values(dataScreen).forEach(
-    val => val?.dispose()
-  );
+  Object.values(dataScreen).forEach(val => val?.dispose());
 });
 </script>
 <style lang="scss" scoped>

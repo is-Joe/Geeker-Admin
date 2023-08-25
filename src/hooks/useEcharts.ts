@@ -1,7 +1,4 @@
-import {
-  onDeactivated,
-  onBeforeUnmount
-} from "vue";
+import { onDeactivated, onBeforeUnmount } from "vue";
 import * as echarts from "echarts";
 
 /**
@@ -9,10 +6,7 @@ import * as echarts from "echarts";
  * @param {Element} myChart Echarts实例 (必传)
  * @param {Object} options 绘制Echarts的参数 (必传)
  * */
-export const useEcharts = (
-  myChart: echarts.ECharts,
-  options: echarts.EChartsCoreOption
-) => {
+export const useEcharts = (myChart: echarts.ECharts, options: echarts.EChartsCoreOption) => {
   if (options && typeof options === "object") {
     myChart.setOption(options);
   }
@@ -20,23 +14,14 @@ export const useEcharts = (
     myChart && myChart.resize();
   };
 
-  window.addEventListener(
-    "resize",
-    echartsResize
-  );
+  window.addEventListener("resize", echartsResize);
 
   // 防止 echarts 页面 keepAlive 时，还在继续监听页面
   onDeactivated(() => {
-    window.removeEventListener(
-      "resize",
-      echartsResize
-    );
+    window.removeEventListener("resize", echartsResize);
   });
 
   onBeforeUnmount(() => {
-    window.removeEventListener(
-      "resize",
-      echartsResize
-    );
+    window.removeEventListener("resize", echartsResize);
   });
 };

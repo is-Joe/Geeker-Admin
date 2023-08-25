@@ -11,36 +11,18 @@
     >
       <!-- 表格 header 按钮 -->
       <template #tableHeader>
-        <el-button
-          type="primary"
-          :icon="CirclePlus"
-          >新增菜单
-        </el-button>
+        <el-button type="primary" :icon="CirclePlus">新增菜单 </el-button>
       </template>
       <!-- 菜单图标 -->
       <template #icon="scope">
         <el-icon :size="18">
-          <component
-            :is="scope.row.meta.icon"
-          ></component>
+          <component :is="scope.row.meta.icon"></component>
         </el-icon>
       </template>
       <!-- 菜单操作 -->
       <template #operation>
-        <el-button
-          type="primary"
-          link
-          :icon="EditPen"
-        >
-          编辑
-        </el-button>
-        <el-button
-          type="primary"
-          link
-          :icon="Delete"
-        >
-          删除
-        </el-button>
+        <el-button type="primary" link :icon="EditPen"> 编辑 </el-button>
+        <el-button type="primary" link :icon="Delete"> 删除 </el-button>
       </template>
     </ProTable>
   </div>
@@ -49,11 +31,7 @@
 <script setup lang="ts" name="menuMange">
 import { ref } from "vue";
 import { ColumnProps } from "@/components/ProTable/interface";
-import {
-  Delete,
-  EditPen,
-  CirclePlus
-} from "@element-plus/icons-vue";
+import { Delete, EditPen, CirclePlus } from "@element-plus/icons-vue";
 import authMenuList from "@/assets/json/authMenuList.json";
 import ProTable from "@/components/ProTable/index.vue";
 

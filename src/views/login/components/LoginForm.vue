@@ -1,15 +1,7 @@
 <template>
-  <el-form
-    ref="loginFormRef"
-    :model="loginForm"
-    :rules="loginRules"
-    size="large"
-  >
+  <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" size="large">
     <el-form-item prop="username">
-      <el-input
-        v-model="loginForm.username"
-        placeholder="用户名：admin / user"
-      >
+      <el-input v-model="loginForm.username" placeholder="用户名：admin / user">
         <template #prefix>
           <el-icon class="el-input__icon">
             <user />
@@ -34,22 +26,8 @@
     </el-form-item>
   </el-form>
   <div class="login-btn">
-    <el-button
-      :icon="CircleClose"
-      round
-      size="large"
-      @click="resetForm(loginFormRef)"
-    >
-      重置
-    </el-button>
-    <el-button
-      :icon="UserFilled"
-      round
-      size="large"
-      type="primary"
-      :loading="loading"
-      @click="login(loginFormRef)"
-    >
+    <el-button :icon="CircleClose" round size="large" @click="resetForm(loginFormRef)"> 重置 </el-button>
+    <el-button :icon="UserFilled" round size="large" type="primary" :loading="loading" @click="login(loginFormRef)">
       登录
     </el-button>
   </div>
@@ -67,10 +45,7 @@ import { useUserStore } from "@/stores/modules/user";
 import { useTabsStore } from "@/stores/modules/tabs";
 import { useKeepAliveStore } from "@/stores/modules/keepAlive";
 import { initDynamicRouter } from "@/routers/modules/dynamicRouter";
-import {
-  CircleClose,
-  UserFilled
-} from "@element-plus/icons-vue";
+import { CircleClose, UserFilled } from "@element-plus/icons-vue";
 import type { ElForm } from "element-plus";
 import md5 from "md5";
 
@@ -105,9 +80,7 @@ const loginForm = reactive<Login.ReqLoginForm>({
 });
 
 // login
-const login = (
-  formEl: FormInstance | undefined
-) => {
+const login = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.validate(async valid => {
     if (!valid) return;
@@ -142,9 +115,7 @@ const login = (
 };
 
 // resetForm
-const resetForm = (
-  formEl: FormInstance | undefined
-) => {
+const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.resetFields();
 };
@@ -153,11 +124,7 @@ onMounted(() => {
   // 监听 enter 事件（调用登录）
   document.onkeydown = (e: KeyboardEvent) => {
     e = (window.event as KeyboardEvent) || e;
-    if (
-      e.code === "Enter" ||
-      e.code === "enter" ||
-      e.code === "NumpadEnter"
-    ) {
+    if (e.code === "Enter" || e.code === "enter" || e.code === "NumpadEnter") {
       if (loading.value) return;
       login(loginFormRef.value);
     }

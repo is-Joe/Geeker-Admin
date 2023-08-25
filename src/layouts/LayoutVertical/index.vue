@@ -9,16 +9,8 @@
         }"
       >
         <div class="logo flx-center">
-          <img
-            class="logo-img"
-            src="@/assets/images/logo.svg"
-            alt="logo"
-          />
-          <span
-            v-show="!isCollapse"
-            class="logo-text"
-            >{{ title }}</span
-          >
+          <img class="logo-img" src="@/assets/images/logo.svg" alt="logo" />
+          <span v-show="!isCollapse" class="logo-text">{{ title }}</span>
         </div>
         <el-scrollbar>
           <el-menu
@@ -58,21 +50,10 @@ const title = import.meta.env.VITE_GLOB_APP_TITLE;
 const route = useRoute();
 const authStore = useAuthStore();
 const globalStore = useGlobalStore();
-const accordion = computed(
-  () => globalStore.accordion
-);
-const isCollapse = computed(
-  () => globalStore.isCollapse
-);
-const menuList = computed(
-  () => authStore.showMenuListGet
-);
-const activeMenu = computed(
-  () =>
-    (route.meta.activeMenu
-      ? route.meta.activeMenu
-      : route.path) as string
-);
+const accordion = computed(() => globalStore.accordion);
+const isCollapse = computed(() => globalStore.isCollapse);
+const menuList = computed(() => authStore.showMenuListGet);
+const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu : route.path) as string);
 </script>
 
 <style scoped lang="scss">

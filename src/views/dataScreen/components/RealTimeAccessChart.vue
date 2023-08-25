@@ -1,26 +1,15 @@
 <template>
   <!-- 实时访问 -->
   <div class="actual-total">
-    <div class="expect-total">
-      可预约总量<i>999999</i>人
-    </div>
+    <div class="expect-total">可预约总量<i>999999</i>人</div>
     <div class="actual-total">
-      <div
-        v-for="(item, index) in actualTotal.split(
-          ''
-        )"
-        :key="index"
-        class="actual-item"
-      >
+      <div v-for="(item, index) in actualTotal.split('')" :key="index" class="actual-item">
         {{ item }}
       </div>
       <div class="actual-item">人</div>
     </div>
   </div>
-  <div
-    id="RealTimeAccessChart"
-    class="echarts"
-  ></div>
+  <div id="RealTimeAccessChart" class="echarts"></div>
 </template>
 
 <script setup lang="ts">
@@ -29,9 +18,7 @@ import { ECharts, init } from "echarts";
 import "echarts-liquidfill";
 const actualTotal: Ref<string> = ref("216908");
 const initChart = (data: number = 1): ECharts => {
-  const charEle = document.getElementById(
-    "RealTimeAccessChart"
-  ) as HTMLElement;
+  const charEle = document.getElementById("RealTimeAccessChart") as HTMLElement;
   const charEch: ECharts = init(charEle);
   const option = {
     title: [
@@ -235,8 +222,7 @@ defineExpose({
     font-family: MetroDF;
     font-size: 32px;
     color: #66ffff;
-    background: url("../images/total.png")
-      no-repeat;
+    background: url("../images/total.png") no-repeat;
     background-size: 100% 100%;
     &:last-child {
       margin-right: 0;

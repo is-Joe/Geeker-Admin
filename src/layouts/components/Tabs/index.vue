@@ -1,12 +1,7 @@
 <template>
   <div class="tabs-box">
     <div class="tabs-menu">
-      <el-tabs
-        v-model="tabsMenuValue"
-        type="card"
-        @tab-click="tabClick"
-        @tab-remove="tabRemove"
-      >
+      <el-tabs v-model="tabsMenuValue" type="card" @tab-click="tabClick" @tab-remove="tabRemove">
         <el-tab-pane
           v-for="item in tabsMenuList"
           :key="item.path"
@@ -15,13 +10,8 @@
           :closable="item.close"
         >
           <template #label>
-            <el-icon
-              v-show="item.icon && tabsIcon"
-              class="tabs-icon"
-            >
-              <component
-                :is="item.icon"
-              ></component>
+            <el-icon v-show="item.icon && tabsIcon" class="tabs-icon">
+              <component :is="item.icon"></component>
             </el-icon>
             {{ item.title }}
           </template>
@@ -34,21 +24,13 @@
 
 <script setup lang="ts">
 import Sortable from "sortablejs";
-import {
-  ref,
-  computed,
-  watch,
-  onMounted
-} from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useGlobalStore } from "@/stores/modules/global";
 import { useTabsStore } from "@/stores/modules/tabs";
 import { useAuthStore } from "@/stores/modules/auth";
 import { useKeepAliveStore } from "@/stores/modules/keepAlive";
-import {
-  TabsPaneContext,
-  TabPaneName
-} from "element-plus";
+import { TabsPaneContext, TabPaneName } from "element-plus";
 import MoreButton from "./components/MoreButton.vue";
 
 const route = useRoute();
@@ -59,12 +41,8 @@ const globalStore = useGlobalStore();
 const keepAliveStore = useKeepAliveStore();
 
 const tabsMenuValue = ref(route.fullPath);
-const tabsMenuList = computed(
-  () => tabStore.tabsMenuList
-);
-const tabsIcon = computed(
-  () => globalStore.tabsIcon
-);
+const tabsMenuList = computed(() => tabStore.tabsMenuList);
+const tabsIcon = computed(() => globalStore.tabsIcon);
 
 onMounted(() => {
   tabsDrop();
@@ -85,50 +63,29 @@ watch(
       close: !route.meta.isAffix
     };
     tabStore.addTabs(tabsParams);
-    route.meta.isKeepAlive &&
-      keepAliveStore.addKeepAliveName(
-        route.name as string
-      );
+    route.meta.isKeepAlive && keepAliveStore.addKeepAliveName(route.name as string);
   },
   { immediate: true }
 );
 
 // tabs 拖拽排序
 const tabsDrop = () => {
-  Sortable.create(
-    document.querySelector(
-      ".el-tabs__nav"
-    ) as HTMLElement,
-    {
-      draggable: ".el-tabs__item",
-      animation: 300,
-      onEnd({ newIndex, oldIndex }) {
-        const tabsList = [
-          ...tabStore.tabsMenuList
-        ];
-        const currRow = tabsList.splice(
-          oldIndex as number,
-          1
-        )[0];
-        tabsList.splice(
-          newIndex as number,
-          0,
-          currRow
-        );
-        tabStore.setTabs(tabsList);
-      }
+  Sortable.create(document.querySelector(".el-tabs__nav") as HTMLElement, {
+    draggable: ".el-tabs__item",
+    animation: 300,
+    onEnd({ newIndex, oldIndex }) {
+      const tabsList = [...tabStore.tabsMenuList];
+      const currRow = tabsList.splice(oldIndex as number, 1)[0];
+      tabsList.splice(newIndex as number, 0, currRow);
+      tabStore.setTabs(tabsList);
     }
-  );
+  });
 };
 
 // 初始化需要固定的 tabs
 const initTabs = () => {
   authStore.flatMenuListGet.forEach(item => {
-    if (
-      item.meta.isAffix &&
-      !item.meta.isHide &&
-      !item.meta.isFull
-    ) {
+    if (item.meta.isAffix && !item.meta.isHide && !item.meta.isFull) {
       const tabsParams = {
         icon: item.meta.icon,
         title: item.meta.title,
@@ -149,15 +106,9 @@ const tabClick = (tabItem: TabsPaneContext) => {
 
 // Remove Tab
 const tabRemove = (fullPath: TabPaneName) => {
-  const name =
-    tabStore.tabsMenuList.filter(
-      item => item.path == fullPath
-    )[0].name || "";
+  const name = tabStore.tabsMenuList.filter(item => item.path == fullPath)[0].name || "";
   keepAliveStore.removeKeepAliveName(name);
-  tabStore.removeTabs(
-    fullPath as string,
-    fullPath == route.fullPath
-  );
+  tabStore.removeTabs(fullPath as string, fullPath == route.fullPath);
 };
 </script>
 

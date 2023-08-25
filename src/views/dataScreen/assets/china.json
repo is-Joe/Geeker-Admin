@@ -26911,7 +26911,11 @@
     },
     {
       "type": "Feature",
-      "properties": { "name": "", "adchar": "JD", "adcode": "100000_JD" },
+      "properties": {
+        "name": "",
+        "adchar": "JD",
+        "adcode": "100000_JD"
+      },
       "geometry": {
         "type": "MultiPolygon",
         "coordinates": [

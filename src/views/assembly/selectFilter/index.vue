@@ -1,25 +1,11 @@
 <template>
   <div class="card content-box">
     <span class="text"> 分类筛选器 🍓🍇🍈🍉</span>
-    <SelectFilter
-      :data="filterData"
-      :default-values="filterResult"
-      @change="changeFilter"
-    />
-    <span class="result"
-      >返回值: {{ filterResult }}</span
-    >
-    <el-descriptions
-      title="配置项 📚"
-      :column="1"
-      border
-    >
-      <el-descriptions-item label="data">
-        需要筛选的数据列表，详情请查看代码
-      </el-descriptions-item>
-      <el-descriptions-item label="defaultValues">
-        默认选中的值
-      </el-descriptions-item>
+    <SelectFilter :data="filterData" :default-values="filterResult" @change="changeFilter" />
+    <span class="result">返回值: {{ filterResult }}</span>
+    <el-descriptions title="配置项 📚" :column="1" border>
+      <el-descriptions-item label="data"> 需要筛选的数据列表，详情请查看代码 </el-descriptions-item>
+      <el-descriptions-item label="defaultValues"> 默认选中的值 </el-descriptions-item>
     </el-descriptions>
   </div>
 </template>
@@ -33,9 +19,7 @@ const filterResult = ref({
   type: ["1", "3"]
 });
 
-const changeFilter = (
-  val: typeof filterResult.value
-) => {
+const changeFilter = (val: typeof filterResult.value) => {
   filterResult.value = val;
 };
 

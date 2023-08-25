@@ -85,12 +85,8 @@
   background: var(--el-color-primary) !important;
 }
 #nprogress .spinner-icon {
-  border-top-color: var(
-    --el-color-primary
-  ) !important;
-  border-left-color: var(
-    --el-color-primary
-  ) !important;
+  border-top-color: var(--el-color-primary) !important;
+  border-left-color: var(--el-color-primary) !important;
 }
 #nprogress .peg {
   box-shadow:

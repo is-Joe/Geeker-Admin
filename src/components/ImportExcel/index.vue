@@ -6,18 +6,9 @@
     width="580px"
     draggable
   >
-    <el-form
-      class="drawer-multiColumn-form"
-      label-width="100px"
-    >
+    <el-form class="drawer-multiColumn-form" label-width="100px">
       <el-form-item label="模板下载 :">
-        <el-button
-          type="primary"
-          :icon="Download"
-          @click="downloadTemp"
-        >
-          点击下载
-        </el-button>
+        <el-button type="primary" :icon="Download" @click="downloadTemp"> 点击下载 </el-button>
       </el-form-item>
       <el-form-item label="文件上传 :">
         <el-upload
@@ -38,15 +29,12 @@
             <el-icon class="el-icon--upload">
               <upload-filled />
             </el-icon>
-            <div class="el-upload__text">
-              将文件拖到此处，或<em>点击上传</em>
-            </div>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
           </slot>
           <template #tip>
             <slot name="tip">
               <div class="el-upload__tip">
-                请上传 .xls , .xlsx
-                标准格式文件，文件最大为
+                请上传 .xls , .xlsx 标准格式文件，文件最大为
                 {{ parameter.fileSize }}M
               </div>
             </slot>
@@ -64,11 +52,7 @@
 import { ref } from "vue";
 import { useDownload } from "@/hooks/useDownload";
 import { Download } from "@element-plus/icons-vue";
-import {
-  ElNotification,
-  UploadRequestOptions,
-  UploadRawFile
-} from "element-plus";
+import { ElNotification, UploadRequestOptions, UploadRawFile } from "element-plus";
 
 export interface ExcelParameterProps {
   title: string; // 标题
@@ -89,16 +73,11 @@ const dialogVisible = ref(false);
 const parameter = ref<ExcelParameterProps>({
   title: "",
   fileSize: 5,
-  fileType: [
-    "application/vnd.ms-excel",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-  ]
+  fileType: ["application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]
 });
 
 // 接收父组件参数
-const acceptParams = (
-  params: ExcelParameterProps
-) => {
+const acceptParams = (params: ExcelParameterProps) => {
   parameter.value = {
     ...parameter.value,
     ...params
@@ -109,25 +88,16 @@ const acceptParams = (
 // Excel 导入模板下载
 const downloadTemp = () => {
   if (!parameter.value.tempApi) return;
-  useDownload(
-    parameter.value.tempApi,
-    `${parameter.value.title}模板`
-  );
+  useDownload(parameter.value.tempApi, `${parameter.value.title}模板`);
 };
 
 // 文件上传
-const uploadExcel = async (
-  param: UploadRequestOptions
-) => {
+const uploadExcel = async (param: UploadRequestOptions) => {
   let excelFormData = new FormData();
   excelFormData.append("file", param.file);
-  excelFormData.append(
-    "isCover",
-    isCover.value as unknown as Blob
-  );
+  excelFormData.append("isCover", isCover.value as unknown as Blob);
   await parameter.value.importApi!(excelFormData);
-  parameter.value.getTableList &&
-    parameter.value.getTableList();
+  parameter.value.getTableList && parameter.value.getTableList();
   dialogVisible.value = false;
 };
 
@@ -135,16 +105,9 @@ const uploadExcel = async (
  * @description 文件上传之前判断
  * @param file 上传的文件
  * */
-const beforeExcelUpload = (
-  file: UploadRawFile
-) => {
-  const isExcel =
-    parameter.value.fileType!.includes(
-      file.type as File.ExcelMimeType
-    );
-  const fileSize =
-    file.size / 1024 / 1024 <
-    parameter.value.fileSize!;
+const beforeExcelUpload = (file: UploadRawFile) => {
+  const isExcel = parameter.value.fileType!.includes(file.type as File.ExcelMimeType);
+  const fileSize = file.size / 1024 / 1024 < parameter.value.fileSize!;
   if (!isExcel)
     ElNotification({
       title: "温馨提示",

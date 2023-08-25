@@ -6,17 +6,11 @@
     }"
     class="card content-box"
   >
-    <span class="text"
-      >水印指令 🍇🍇🍇🍓🍓🍓</span
-    >
+    <span class="text">水印指令 🍇🍇🍇🍓🍓🍓</span>
   </div>
 </template>
 
-<script
-  setup
-  lang="ts"
-  name="watermarkDirect"
-></script>
+<script setup lang="ts" name="watermarkDirect"></script>
 
 <style scoped lang="scss">
 @import "./index.scss";

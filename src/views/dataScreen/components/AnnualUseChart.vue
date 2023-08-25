@@ -4,24 +4,14 @@
 </template>
 
 <script setup lang="ts">
-import {
-  ECharts,
-  EChartsOption,
-  init
-} from "echarts";
+import { ECharts, EChartsOption, init } from "echarts";
 interface ChartProp {
   label: string;
   value: string[];
 }
 const initChart = (data: any = {}): ECharts => {
-  const charEle = document.getElementById(
-    "AnnualUseChart"
-  ) as HTMLElement;
-  const gradientColors = [
-    "rgba(254, 219, 101,0.1)",
-    "rgba(0, 122, 254,0.1)",
-    "rgba(255, 75, 122, 0.1)"
-  ];
+  const charEle = document.getElementById("AnnualUseChart") as HTMLElement;
+  const gradientColors = ["rgba(254, 219, 101,0.1)", "rgba(0, 122, 254,0.1)", "rgba(255, 75, 122, 0.1)"];
   const charEch: ECharts = init(charEle);
   const option: EChartsOption = {
     tooltip: {
@@ -37,26 +27,15 @@ const initChart = (data: any = {}): ECharts => {
         p.forEach((val: any) => {
           str += `
           <div class="year-item">
-            <span class="year-dot" style="background-color: ${
-              val.color
-            };"></span>
-            <span class="year-name">${
-              val.seriesName
-            }</span>
-            <span class="year-value">${
-              val.data >= 10000
-                ? (val.data / 10000).toFixed(2) +
-                  "w"
-                : val.data
-            }</span>
+            <span class="year-dot" style="background-color: ${val.color};"></span>
+            <span class="year-name">${val.seriesName}</span>
+            <span class="year-value">${val.data >= 10000 ? (val.data / 10000).toFixed(2) + "w" : val.data}</span>
           </div>
           `;
         });
         let dom = `
                     <div class="annual-tooTip">
-                      <span class="annual-month">${
-                        p[0].dataIndex + 1
-                      }月</span>
+                      <span class="annual-month">${p[0].dataIndex + 1}月</span>
                       <div class="annual-list">
                         ${str}
                       </div>
@@ -156,55 +135,53 @@ const initChart = (data: any = {}): ECharts => {
         show: false
       }
     },
-    series: data.data.map(
-      (val: ChartProp, index: number) => {
-        return {
-          name: val.label,
-          type: "line",
-          symbol: "circle", // 默认是空心圆（中间是白色的），改成实心圆
-          showSymbol: false,
-          smooth: true,
-          lineStyle: {
-            width: 1,
-            color: data.colors[index], // 线条颜色
-            borderColor: data.colors[index]
+    series: data.data.map((val: ChartProp, index: number) => {
+      return {
+        name: val.label,
+        type: "line",
+        symbol: "circle", // 默认是空心圆（中间是白色的），改成实心圆
+        showSymbol: false,
+        smooth: true,
+        lineStyle: {
+          width: 1,
+          color: data.colors[index], // 线条颜色
+          borderColor: data.colors[index]
+        },
+        itemStyle: {
+          color: data.colors[index],
+          borderColor: "#646ace",
+          borderWidth: 2
+        },
+        tooltip: {
+          show: true
+        },
+        areaStyle: {
+          // 区域填充样式
+          // 线性渐变，前4个参数分别是x0,y0,x2,y2(范围0~1);相当于图形包围盒中的百分比。如果最后一个参数是‘true’，则该四个值是绝对像素位置。
+          color: {
+            type: "linear",
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              {
+                offset: 0,
+                color: data.colors[index] // 0% 处的颜色
+              },
+              {
+                offset: 1,
+                color: gradientColors[index] // 100% 处的颜色
+              }
+            ],
+            global: false // 缺省为 false
           },
-          itemStyle: {
-            color: data.colors[index],
-            borderColor: "#646ace",
-            borderWidth: 2
-          },
-          tooltip: {
-            show: true
-          },
-          areaStyle: {
-            // 区域填充样式
-            // 线性渐变，前4个参数分别是x0,y0,x2,y2(范围0~1);相当于图形包围盒中的百分比。如果最后一个参数是‘true’，则该四个值是绝对像素位置。
-            color: {
-              type: "linear",
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                {
-                  offset: 0,
-                  color: data.colors[index] // 0% 处的颜色
-                },
-                {
-                  offset: 1,
-                  color: gradientColors[index] // 100% 处的颜色
-                }
-              ],
-              global: false // 缺省为 false
-            },
-            shadowColor: "rgba(25,163,223, 0.3)", //阴影颜色
-            shadowBlur: 20 // shadowBlur设图形阴影的模糊大小。配合shadowColor,shadowOffsetX/Y, 设置图形的阴影效果。
-          },
-          data: val.value
-        };
-      }
-    )
+          shadowColor: "rgba(25,163,223, 0.3)", //阴影颜色
+          shadowBlur: 20 // shadowBlur设图形阴影的模糊大小。配合shadowColor,shadowOffsetX/Y, 设置图形的阴影效果。
+        },
+        data: val.value
+      };
+    })
   };
   charEch.setOption(option);
   return charEch;
@@ -223,8 +200,7 @@ defineExpose({
   width: 206px;
   height: 103px;
   padding: 5px 20px;
-  background: url("../images/contrast-bg.png")
-    no-repeat;
+  background: url("../images/contrast-bg.png") no-repeat;
   background-size: 100% 100%;
   .annual-month {
     display: inline-block;

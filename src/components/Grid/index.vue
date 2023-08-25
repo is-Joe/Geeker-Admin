@@ -41,9 +41,7 @@ const props = withDefaults(defineProps<Props>(), {
   gap: 0
 });
 
-onBeforeMount(
-  () => props.collapsed && findIndex()
-);
+onBeforeMount(() => props.collapsed && findIndex());
 onMounted(() => {
   resize({
     target: { innerWidth: window.innerWidth }
@@ -86,12 +84,7 @@ const resize = (e: UIEvent) => {
 };
 
 // 注入 gap 间距
-provide(
-  "gap",
-  Array.isArray(props.gap)
-    ? props.gap[0]
-    : props.gap
-);
+provide("gap", Array.isArray(props.gap) ? props.gap[0] : props.gap);
 
 // 注入响应式断点
 let breakPoint = ref<BreakPoint>("xl");
@@ -103,10 +96,7 @@ provide("shouldHiddenIndex", hiddenIndex);
 
 // 注入 cols
 const gridCols = computed(() => {
-  if (typeof props.cols === "object")
-    return (
-      props.cols[breakPoint.value] ?? props.cols
-    );
+  if (typeof props.cols === "object") return props.cols[breakPoint.value] ?? props.cols;
   return props.cols;
 });
 provide("cols", gridCols);
@@ -119,52 +109,26 @@ const findIndex = () => {
   let suffix: VNode | null = null;
   slots.forEach((slot: any) => {
     // suffix
-    if (
-      typeof slot.type === "object" &&
-      slot.type.name === "GridItem" &&
-      slot.props?.suffix !== undefined
-    )
+    if (typeof slot.type === "object" && slot.type.name === "GridItem" && slot.props?.suffix !== undefined)
       suffix = slot;
     // slot children
-    if (
-      typeof slot.type === "symbol" &&
-      Array.isArray(slot.children)
-    )
-      fields.push(...slot.children);
+    if (typeof slot.type === "symbol" && Array.isArray(slot.children)) fields.push(...slot.children);
   });
 
   // 计算 suffix 所占用的列
   let suffixCols = 0;
   if (suffix) {
     suffixCols =
-      ((suffix as VNode).props![breakPoint.value]
-        ?.span ??
-        (suffix as VNode).props?.span ??
-        1) +
-      ((suffix as VNode).props![breakPoint.value]
-        ?.offset ??
-        (suffix as VNode).props?.offset ??
-        0);
+      ((suffix as VNode).props![breakPoint.value]?.span ?? (suffix as VNode).props?.span ?? 1) +
+      ((suffix as VNode).props![breakPoint.value]?.offset ?? (suffix as VNode).props?.offset ?? 0);
   }
   try {
     let find = false;
     fields.reduce((prev = 0, current, index) => {
       prev +=
-        ((current as VNode)!.props![
-          breakPoint.value
-        ]?.span ??
-          (current as VNode)!.props?.span ??
-          1) +
-        ((current as VNode)!.props![
-          breakPoint.value
-        ]?.offset ??
-          (current as VNode)!.props?.offset ??
-          0);
-      if (
-        Number(prev) >
-        props.collapsedRows * gridCols.value -
-          suffixCols
-      ) {
+        ((current as VNode)!.props![breakPoint.value]?.span ?? (current as VNode)!.props?.span ?? 1) +
+        ((current as VNode)!.props![breakPoint.value]?.offset ?? (current as VNode)!.props?.offset ?? 0);
+      if (Number(prev) > props.collapsedRows * gridCols.value - suffixCols) {
         hiddenIndex.value = index;
         find = true;
         throw "find it";
@@ -196,10 +160,8 @@ watch(
 
 // 设置间距
 const gridGap = computed(() => {
-  if (typeof props.gap === "number")
-    return `${props.gap}px`;
-  if (Array.isArray(props.gap))
-    return `${props.gap[1]}px ${props.gap[0]}px`;
+  if (typeof props.gap === "number") return `${props.gap}px`;
+  if (Array.isArray(props.gap)) return `${props.gap[1]}px ${props.gap[0]}px`;
   return "unset";
 });
 

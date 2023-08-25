@@ -9,9 +9,7 @@ import { useEcharts } from "@/hooks/useEcharts";
 
 const echartsRef = ref<HTMLElement>();
 const initChart = (data: any) => {
-  const myChart: echarts.ECharts = echarts.init(
-    echartsRef.value as HTMLElement
-  );
+  const myChart: echarts.ECharts = echarts.init(echartsRef.value as HTMLElement);
   const option = {
     tooltip: {
       trigger: "axis",
@@ -78,9 +76,7 @@ const initChart = (data: any) => {
           fontSize: 14,
           formatter: function (name: string) {
             undefined;
-            return name.length > 8
-              ? name.slice(0, 8) + "..."
-              : name;
+            return name.length > 8 ? name.slice(0, 8) + "..." : name;
           }
         },
         axisLine: {

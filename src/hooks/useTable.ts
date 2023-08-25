@@ -58,19 +58,13 @@ export const useTable = (
     if (!api) return;
     try {
       // 先把初始化参数和分页参数放到总参数里面
-      Object.assign(
-        state.totalParam,
-        initParam,
-        isPageable ? pageParam.value : {}
-      );
+      Object.assign(state.totalParam, initParam, isPageable ? pageParam.value : {});
       let { data } = await api({
         ...state.searchInitParam,
         ...state.totalParam
       });
       dataCallBack && (data = dataCallBack(data));
-      state.tableData = isPageable
-        ? data.list
-        : data;
+      state.tableData = isPageable ? data.list : data;
       // 解构后台返回的分页数据 (如果有分页更新分页信息)
       if (isPageable) {
         const { pageNum, pageSize, total } = data;
@@ -92,25 +86,15 @@ export const useTable = (
   const updatedTotalParam = () => {
     state.totalParam = {};
     // 处理查询参数，可以给查询参数加自定义前缀操作
-    let nowSearchParam: Table.StateProps["searchParam"] =
-      {};
+    let nowSearchParam: Table.StateProps["searchParam"] = {};
     // 防止手动清空输入框携带参数（这里可以自定义查询参数前缀）
     for (let key in state.searchParam) {
       // * 某些情况下参数为 false/0 也应该携带参数
-      if (
-        state.searchParam[key] ||
-        state.searchParam[key] === false ||
-        state.searchParam[key] === 0
-      ) {
-        nowSearchParam[key] =
-          state.searchParam[key];
+      if (state.searchParam[key] || state.searchParam[key] === false || state.searchParam[key] === 0) {
+        nowSearchParam[key] = state.searchParam[key];
       }
     }
-    Object.assign(
-      state.totalParam,
-      nowSearchParam,
-      isPageable ? pageParam.value : {}
-    );
+    Object.assign(state.totalParam, nowSearchParam, isPageable ? pageParam.value : {});
   };
 
   /**
@@ -118,9 +102,7 @@ export const useTable = (
    * @param {Object} pageable 后台返回的分页数据
    * @return void
    * */
-  const updatePageable = (
-    pageable: Table.Pageable
-  ) => {
+  const updatePageable = (pageable: Table.Pageable) => {
     Object.assign(state.pageable, pageable);
   };
 
@@ -142,12 +124,9 @@ export const useTable = (
     state.pageable.pageNum = 1;
     state.searchParam = {};
     // 重置搜索表单的时，如果有默认搜索参数，则重置默认的搜索参数
-    Object.keys(state.searchInitParam).forEach(
-      key => {
-        state.searchParam[key] =
-          state.searchInitParam[key];
-      }
-    );
+    Object.keys(state.searchInitParam).forEach(key => {
+      state.searchParam[key] = state.searchInitParam[key];
+    });
     updatedTotalParam();
     getTableList();
   };

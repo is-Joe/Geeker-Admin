@@ -1,10 +1,5 @@
 <template>
-  <div
-    :class="[
-      'editor-box',
-      self_disabled ? 'editor-disabled' : ''
-    ]"
-  >
+  <div :class="['editor-box', self_disabled ? 'editor-disabled' : '']">
     <Toolbar
       v-if="!hideToolBar"
       class="editor-toolbar"
@@ -25,30 +20,12 @@
 </template>
 
 <script setup lang="ts" name="WangEditor">
-import {
-  nextTick,
-  computed,
-  inject,
-  shallowRef,
-  onBeforeUnmount
-} from "vue";
-import {
-  IToolbarConfig,
-  IEditorConfig
-} from "@wangeditor/editor";
-import {
-  Editor,
-  Toolbar
-} from "@wangeditor/editor-for-vue";
-import {
-  uploadImg,
-  uploadVideo
-} from "@/api/modules/upload";
+import { nextTick, computed, inject, shallowRef, onBeforeUnmount } from "vue";
+import { IToolbarConfig, IEditorConfig } from "@wangeditor/editor";
+import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
+import { uploadImg, uploadVideo } from "@/api/modules/upload";
 import "@wangeditor/editor/dist/css/style.css";
-import {
-  formContextKey,
-  formItemContextKey
-} from "element-plus";
+import { formContextKey, formItemContextKey } from "element-plus";
 
 // 富文本 DOM 元素
 const editorRef = shallowRef();
@@ -68,45 +45,35 @@ interface RichEditorProps {
   hideToolBar?: boolean; // 是否隐藏工具栏 ==> 非必传（默认为false）
   disabled?: boolean; // 是否禁用编辑器 ==> 非必传（默认为false）
 }
-const props = withDefaults(
-  defineProps<RichEditorProps>(),
-  {
-    toolbarConfig: () => {
-      return {
-        excludeKeys: []
-      };
-    },
-    editorConfig: () => {
-      return {
-        placeholder: "请输入内容...",
-        MENU_CONF: {}
-      };
-    },
-    height: "500px",
-    mode: "default",
-    hideToolBar: false,
-    disabled: false
-  }
-);
+const props = withDefaults(defineProps<RichEditorProps>(), {
+  toolbarConfig: () => {
+    return {
+      excludeKeys: []
+    };
+  },
+  editorConfig: () => {
+    return {
+      placeholder: "请输入内容...",
+      MENU_CONF: {}
+    };
+  },
+  height: "500px",
+  mode: "default",
+  hideToolBar: false,
+  disabled: false
+});
 
 // 获取 el-form 组件上下文
-const formContext = inject(
-  formContextKey,
-  void 0
-);
+const formContext = inject(formContextKey, void 0);
 // 获取 el-form-item 组件上下文
-const formItemContext = inject(
-  formItemContextKey,
-  void 0
-);
+const formItemContext = inject(formItemContextKey, void 0);
 // 判断是否禁用上传和删除
 const self_disabled = computed(() => {
   return props.disabled || formContext?.disabled;
 });
 
 // 判断当前富文本编辑器是否禁用
-if (self_disabled.value)
-  nextTick(() => editorRef.value.disable());
+if (self_disabled.value) nextTick(() => editorRef.value.disable());
 
 // 富文本的内容监听，触发父组件改变，实现双向数据绑定
 type EmitProps = {
@@ -130,16 +97,9 @@ const valueHtml = computed({
  * @param file 上传的文件
  * @param insertFn 上传成功后的回调函数（插入到富文本编辑器中）
  * */
-type InsertFnTypeImg = (
-  url: string,
-  alt?: string,
-  href?: string
-) => void;
+type InsertFnTypeImg = (url: string, alt?: string, href?: string) => void;
 props.editorConfig.MENU_CONF!["uploadImage"] = {
-  async customUpload(
-    file: File,
-    insertFn: InsertFnTypeImg
-  ) {
+  async customUpload(file: File, insertFn: InsertFnTypeImg) {
     if (!uploadImgValidate(file)) return;
     let formData = new FormData();
     formData.append("file", file);
@@ -153,9 +113,7 @@ props.editorConfig.MENU_CONF!["uploadImage"] = {
 };
 
 // 图片上传前判断
-const uploadImgValidate = (
-  file: File
-): boolean => {
+const uploadImgValidate = (file: File): boolean => {
   console.log(file);
   return true;
 };
@@ -165,22 +123,14 @@ const uploadImgValidate = (
  * @param file 上传的文件
  * @param insertFn 上传成功后的回调函数（插入到富文本编辑器中）
  * */
-type InsertFnTypeVideo = (
-  url: string,
-  poster?: string
-) => void;
+type InsertFnTypeVideo = (url: string, poster?: string) => void;
 props.editorConfig.MENU_CONF!["uploadVideo"] = {
-  async customUpload(
-    file: File,
-    insertFn: InsertFnTypeVideo
-  ) {
+  async customUpload(file: File, insertFn: InsertFnTypeVideo) {
     if (!uploadVideoValidate(file)) return;
     let formData = new FormData();
     formData.append("file", file);
     try {
-      const { data } = await uploadVideo(
-        formData
-      );
+      const { data } = await uploadVideo(formData);
       insertFn(data.fileUrl);
     } catch (error) {
       console.log(error);
@@ -189,19 +139,14 @@ props.editorConfig.MENU_CONF!["uploadVideo"] = {
 };
 
 // 视频上传前判断
-const uploadVideoValidate = (
-  file: File
-): boolean => {
+const uploadVideoValidate = (file: File): boolean => {
   console.log(file);
   return true;
 };
 
 // 编辑框失去焦点时触发
 const handleBlur = () => {
-  formItemContext?.prop &&
-    formContext?.validateField([
-      formItemContext.prop as string
-    ]);
+  formItemContext?.prop && formContext?.validateField([formItemContext.prop as string]);
 };
 
 // 组件销毁时，也及时销毁编辑器

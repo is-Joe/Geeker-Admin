@@ -4,19 +4,13 @@
 </template>
 
 <script setup lang="ts">
-import {
-  ECharts,
-  EChartsOption,
-  init
-} from "echarts";
+import { ECharts, EChartsOption, init } from "echarts";
 interface ChartProp {
   unit: string[];
   data: number[];
 }
 const initChart = (data: any = {}): ECharts => {
-  const charEle = document.getElementById(
-    "OverNext30Chart"
-  ) as HTMLElement;
+  const charEle = document.getElementById("OverNext30Chart") as HTMLElement;
   const charEch: ECharts = init(charEle);
   const option: EChartsOption = {
     tooltip: {
@@ -82,47 +76,44 @@ const initChart = (data: any = {}): ECharts => {
         data: initDate()
       }
     ],
-    yAxis: data.unit.map(
-      (val: ChartProp, index: number) => {
-        return {
-          name: "(访问量)",
-          nameTextStyle: {
-            color: "#7ec7ff",
-            fontSize: 12,
-            padding: [0, 30, -4, 0]
-          },
-          // nameGap:18,
-          minInterval: 1,
-          splitLine: {
-            show: false,
-            lineStyle: {
-              color: "#192a44"
-            }
-          },
-          axisLine: {
-            show: index === 0 ? true : false,
-            lineStyle: {
-              color: "#233653"
-            }
-          },
-          axisLabel: {
-            show: true,
-            color: "#7ec7ff",
-            padding: 0,
-            formatter: function (value: string) {
-              if (Number(value) >= 10000) {
-                value =
-                  Number(value) / 10000 + "w";
-              }
-              return value;
-            }
-          },
-          axisTick: {
-            show: false
+    yAxis: data.unit.map((val: ChartProp, index: number) => {
+      return {
+        name: "(访问量)",
+        nameTextStyle: {
+          color: "#7ec7ff",
+          fontSize: 12,
+          padding: [0, 30, -4, 0]
+        },
+        // nameGap:18,
+        minInterval: 1,
+        splitLine: {
+          show: false,
+          lineStyle: {
+            color: "#192a44"
           }
-        };
-      }
-    ),
+        },
+        axisLine: {
+          show: index === 0 ? true : false,
+          lineStyle: {
+            color: "#233653"
+          }
+        },
+        axisLabel: {
+          show: true,
+          color: "#7ec7ff",
+          padding: 0,
+          formatter: function (value: string) {
+            if (Number(value) >= 10000) {
+              value = Number(value) / 10000 + "w";
+            }
+            return value;
+          }
+        },
+        axisTick: {
+          show: false
+        }
+      };
+    }),
     series: data.data.map(() => {
       return {
         name: "",
@@ -186,20 +177,12 @@ const initDate = (): string[] => {
   let endDate = new Date();
   endDate.setDate(startDate.getDate() + 30);
   startDate.setDate(startDate.getDate() + 1);
-  while (
-    endDate.getTime() - startDate.getTime() >=
-    0
-  ) {
+  while (endDate.getTime() - startDate.getTime() >= 0) {
     let month =
-      (startDate.getMonth() + 1).toString()
-        .length === 1
-        ? "0" +
-          (startDate.getMonth() + 1).toString()
+      (startDate.getMonth() + 1).toString().length === 1
+        ? "0" + (startDate.getMonth() + 1).toString()
         : startDate.getMonth() + 1;
-    let day =
-      startDate.getDate().toString().length === 1
-        ? "0" + startDate.getDate()
-        : startDate.getDate();
+    let day = startDate.getDate().toString().length === 1 ? "0" + startDate.getDate() : startDate.getDate();
     dateList.push(month + "/" + day);
     startDate.setDate(startDate.getDate() + 1);
   }
@@ -220,8 +203,7 @@ defineExpose({
     width: 180px;
     height: 60px;
     padding-left: 20px;
-    background: url("../images/line-bg.png")
-      no-repeat;
+    background: url("../images/line-bg.png") no-repeat;
     background-size: 100% 100%;
     span {
       font-size: 12px;
