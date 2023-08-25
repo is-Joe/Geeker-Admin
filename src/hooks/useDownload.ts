@@ -18,7 +18,8 @@ export const useDownload = async (
   if (isNotify) {
     ElNotification({
       title: "温馨提示",
-      message: "如果数据庞大会导致下载缓慢哦，请您耐心等待！",
+      message:
+        "如果数据庞大会导致下载缓慢哦，请您耐心等待！",
       type: "info",
       duration: 3000
     });
@@ -27,9 +28,15 @@ export const useDownload = async (
     const res = await api(params);
     const blob = new Blob([res]);
     // 兼容 edge 不支持 createObjectURL 方法
-    if ("msSaveOrOpenBlob" in navigator) return window.navigator.msSaveOrOpenBlob(blob, tempName + fileType);
-    const blobUrl = window.URL.createObjectURL(blob);
-    const exportFile = document.createElement("a");
+    if ("msSaveOrOpenBlob" in navigator)
+      return window.navigator.msSaveOrOpenBlob(
+        blob,
+        tempName + fileType
+      );
+    const blobUrl =
+      window.URL.createObjectURL(blob);
+    const exportFile =
+      document.createElement("a");
     exportFile.style.display = "none";
     exportFile.download = `${tempName}${fileType}`;
     exportFile.href = blobUrl;

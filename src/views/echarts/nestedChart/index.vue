@@ -1,5 +1,8 @@
 <template>
-  <div ref="echartsRef" class="card content-box"></div>
+  <div
+    ref="echartsRef"
+    class="card content-box"
+  ></div>
 </template>
 
 <script setup lang="ts" name="nestedChart">
@@ -8,14 +11,27 @@ import * as echarts from "echarts";
 import { useEcharts } from "@/hooks/useEcharts";
 const echartsRef = ref<HTMLElement>();
 onMounted(() => {
-  let myChart: echarts.ECharts = echarts.init(echartsRef.value as HTMLElement);
+  let myChart: echarts.ECharts = echarts.init(
+    echartsRef.value as HTMLElement
+  );
   let option: echarts.EChartsOption = {
     tooltip: {
       trigger: "item",
       formatter: "{a} <br/>{b}: {c} ({d}%)"
     },
     legend: {
-      data: ["Direct", "Marketing", "Search Engine", "Email", "Union Ads", "Video Ads", "Baidu", "Google", "Bing", "Others"],
+      data: [
+        "Direct",
+        "Marketing",
+        "Search Engine",
+        "Email",
+        "Union Ads",
+        "Video Ads",
+        "Baidu",
+        "Google",
+        "Bing",
+        "Others"
+      ],
       textStyle: {
         color: "#a1a1a1"
       }
@@ -36,7 +52,11 @@ onMounted(() => {
         data: [
           { value: 1548, name: "Search Engine" },
           { value: 775, name: "Direct" },
-          { value: 679, name: "Marketing", selected: true }
+          {
+            value: 679,
+            name: "Marketing",
+            selected: true
+          }
         ]
       },
       {
@@ -47,7 +67,8 @@ onMounted(() => {
           length: 30
         },
         label: {
-          formatter: "{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ",
+          formatter:
+            "{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ",
           backgroundColor: "#F6F8FC",
           borderColor: "#8C8D8E",
           borderWidth: 1,

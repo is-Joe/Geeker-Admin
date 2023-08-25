@@ -5,10 +5,25 @@
       type="warning"
       :closable="false"
     />
-    <component :is="'el-form'" v-bind="options.form" ref="proFormRef" :model="model">
-      <template v-for="item in options.columns" :key="item.prop">
-        <component :is="'el-form-item'" v-bind="item.formItem">
-          <component :is="`el-${item.attrs.typeName}`" v-bind="item.attrs" v-model="model[item.formItem.prop]" />
+    <component
+      :is="'el-form'"
+      v-bind="options.form"
+      ref="proFormRef"
+      :model="model"
+    >
+      <template
+        v-for="item in options.columns"
+        :key="item.prop"
+      >
+        <component
+          :is="'el-form-item'"
+          v-bind="item.formItem"
+        >
+          <component
+            :is="`el-${item.attrs.typeName}`"
+            v-bind="item.attrs"
+            v-model="model[item.formItem.prop]"
+          />
         </component>
       </template>
       <el-form-item>

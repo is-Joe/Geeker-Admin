@@ -75,9 +75,9 @@
           ]
         },
         {
-          "path": "/proTable/dev_useProTable",
-          "name": "dev_useProTable",
-          "component": "/proTable/useProTable/index",
+          "path": "/proTable/devuseProTable",
+          "name": "devuseProTable",
+          "component": "/proTable/devuseProTable/index",
           "meta": {
             "icon": "Menu",
             "title": "使用 dev_ProTable",
@@ -89,13 +89,13 @@
           },
           "children": [
             {
-              "path": "/proTable/dev_useProTable/detail/:id",
-              "name": "dev_useProTableDetail",
-              "component": "/proTable/dev_useProTable/detail",
+              "path": "/proTable/devuseProTable/detail/:id",
+              "name": "devuseProTableDetail",
+              "component": "/proTable/devuseProTable/detail",
               "meta": {
                 "icon": "Menu",
                 "title": "ProTable 详情",
-                "activeMenu": "/proTable/useProTable",
+                "activeMenu": "/proTable/devuseProTable",
                 "isLink": "",
                 "isHide": true,
                 "isFull": false,

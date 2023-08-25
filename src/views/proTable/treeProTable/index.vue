@@ -17,17 +17,50 @@
         :request-api="getUserTreeList"
         :request-auto="false"
         :init-param="initParam"
-        :search-col="{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3 }"
+        :search-col="{
+          xs: 1,
+          sm: 1,
+          md: 2,
+          lg: 3,
+          xl: 3
+        }"
       >
         <!-- 表格 header 按钮 -->
         <template #tableHeader>
-          <el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')"> 新增用户 </el-button>
+          <el-button
+            type="primary"
+            :icon="CirclePlus"
+            @click="openDrawer('新增')"
+          >
+            新增用户
+          </el-button>
         </template>
         <!-- 表格操作 -->
         <template #operation="scope">
-          <el-button type="primary" link :icon="View" @click="openDrawer('查看', scope.row)"> 查看 </el-button>
-          <el-button type="primary" link :icon="EditPen" @click="openDrawer('编辑', scope.row)"> 编辑 </el-button>
-          <el-button type="primary" link :icon="Delete" @click="deleteAccount(scope.row)"> 删除 </el-button>
+          <el-button
+            type="primary"
+            link
+            :icon="View"
+            @click="openDrawer('查看', scope.row)"
+          >
+            查看
+          </el-button>
+          <el-button
+            type="primary"
+            link
+            :icon="EditPen"
+            @click="openDrawer('编辑', scope.row)"
+          >
+            编辑
+          </el-button>
+          <el-button
+            type="primary"
+            link
+            :icon="Delete"
+            @click="deleteAccount(scope.row)"
+          >
+            删除
+          </el-button>
         </template>
       </ProTable>
       <UserDrawer ref="drawerRef" />
@@ -41,27 +74,47 @@ import { onMounted, reactive, ref } from "vue";
 import { User } from "@/api/interface";
 import { genderType } from "@/utils/serviceDict";
 import { useHandleData } from "@/hooks/useHandleData";
-import { ElMessage, ElNotification } from "element-plus";
+import {
+  ElMessage,
+  ElNotification
+} from "element-plus";
 import ProTable from "@/components/ProTable/index.vue";
 import TreeFilter from "@/components/TreeFilter/index.vue";
 import ImportExcel from "@/components/ImportExcel/index.vue";
 import UserDrawer from "@/views/proTable/components/UserDrawer.vue";
-import { CirclePlus, Delete, EditPen, View } from "@element-plus/icons-vue";
-import { ColumnProps, ProTableInstance } from "@/components/ProTable/interface";
-import { getUserTreeList, deleteUser, editUser, addUser, getUserStatus, getUserDepartment } from "@/api/modules/user";
+import {
+  CirclePlus,
+  Delete,
+  EditPen,
+  View
+} from "@element-plus/icons-vue";
+import {
+  ColumnProps,
+  ProTableInstance
+} from "@/components/ProTable/interface";
+import {
+  getUserTreeList,
+  deleteUser,
+  editUser,
+  addUser,
+  getUserStatus,
+  getUserDepartment
+} from "@/api/modules/user";
 
 onMounted(() => {
   getTreeFilter();
   ElNotification({
     title: "温馨提示",
-    message: "该页面 ProTable 数据不会自动请求，需等待 treeFilter 数据请求完成之后，才会触发表格请求。",
+    message:
+      "该页面 ProTable 数据不会自动请求，需等待 treeFilter 数据请求完成之后，才会触发表格请求。",
     type: "info",
     duration: 10000
   });
   setTimeout(() => {
     ElNotification({
       title: "温馨提示",
-      message: "该页面 ProTable 性别搜索框为远程数据搜索，详情可查看代码。",
+      message:
+        "该页面 ProTable 性别搜索框为远程数据搜索，详情可查看代码。",
       type: "info",
       duration: 10000
     });
@@ -80,7 +133,8 @@ const treeFilterData = ref<any>([]);
 const getTreeFilter = async () => {
   const { data } = await getUserDepartment();
   treeFilterData.value = data;
-  initParam.departmentId = treeFilterData.value[1].id;
+  initParam.departmentId =
+    treeFilterData.value[1].id;
 };
 
 // 树形筛选切换
@@ -92,14 +146,20 @@ const changeTreeFilter = (val: string) => {
 
 // 模拟远程加载性别搜索框数据
 const loading = ref(false);
-const filterGenderEnum = ref<typeof genderType>([]);
+const filterGenderEnum = ref<typeof genderType>(
+  []
+);
 const remoteMethod = (query: string) => {
   filterGenderEnum.value.length = 0;
   if (!query) return;
   loading.value = true;
   setTimeout(() => {
     loading.value = false;
-    filterGenderEnum.value.push(...genderType.filter(item => item.label.includes(query)));
+    filterGenderEnum.value.push(
+      ...genderType.filter(item =>
+        item.label.includes(query)
+      )
+    );
   }, 500);
 };
 
@@ -115,9 +175,18 @@ const columns: ColumnProps<User.ResUserList>[] = [
     enum: filterGenderEnum.value,
     search: {
       el: "select",
-      props: { placeholder: "请输入性别查询", filterable: true, remote: true, reserveKeyword: true, loading, remoteMethod }
+      props: {
+        placeholder: "请输入性别查询",
+        filterable: true,
+        remote: true,
+        reserveKeyword: true,
+        loading,
+        remoteMethod
+      }
     },
-    render: scope => <>{scope.row.gender === 1 ? "男" : "女"}</>
+    render: scope => (
+      <>{scope.row.gender === 1 ? "男" : "女"}</>
+    )
   },
   { prop: "idCard", label: "身份证号" },
   { prop: "email", label: "邮箱" },
@@ -129,26 +198,54 @@ const columns: ColumnProps<User.ResUserList>[] = [
     tag: true,
     enum: getUserStatus,
     search: { el: "tree-select" },
-    fieldNames: { label: "userLabel", value: "userStatus" }
+    fieldNames: {
+      label: "userLabel",
+      value: "userStatus"
+    }
   },
-  { prop: "createTime", label: "创建时间", width: 180 },
-  { prop: "operation", label: "操作", width: 300, fixed: "right" }
+  {
+    prop: "createTime",
+    label: "创建时间",
+    width: 180
+  },
+  {
+    prop: "operation",
+    label: "操作",
+    width: 300,
+    fixed: "right"
+  }
 ];
 
 // 删除用户信息
-const deleteAccount = async (params: User.ResUserList) => {
-  await useHandleData(deleteUser, { id: [params.id] }, `删除【${params.username}】用户`);
+const deleteAccount = async (
+  params: User.ResUserList
+) => {
+  await useHandleData(
+    deleteUser,
+    { id: [params.id] },
+    `删除【${params.username}】用户`
+  );
   proTable.value?.getTableList();
 };
 
 // 打开 drawer(新增、查看、编辑)
-const drawerRef = ref<InstanceType<typeof UserDrawer> | null>(null);
-const openDrawer = (title: string, row: Partial<User.ResUserList> = {}) => {
+const drawerRef = ref<InstanceType<
+  typeof UserDrawer
+> | null>(null);
+const openDrawer = (
+  title: string,
+  row: Partial<User.ResUserList> = {}
+) => {
   const params = {
     title,
     row: { ...row },
     isView: title === "查看",
-    api: title === "新增" ? addUser : title === "编辑" ? editUser : undefined,
+    api:
+      title === "新增"
+        ? addUser
+        : title === "编辑"
+        ? editUser
+        : undefined,
     getTableList: proTable.value?.getTableList
   };
   drawerRef.value?.acceptParams(params);

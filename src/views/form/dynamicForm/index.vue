@@ -1,7 +1,19 @@
 <template>
   <div class="card content-box">
-    <el-button class="add" type="primary" plain @click="addDomain"> Add Input </el-button>
-    <el-form ref="formRef" :model="dynamicValidateForm" label-width="100px" class="demo-dynamic">
+    <el-button
+      class="add"
+      type="primary"
+      plain
+      @click="addDomain"
+    >
+      Add Input
+    </el-button>
+    <el-form
+      ref="formRef"
+      :model="dynamicValidateForm"
+      label-width="100px"
+      class="demo-dynamic"
+    >
       <el-form-item
         prop="email"
         label="Email"
@@ -13,15 +25,20 @@
           },
           {
             type: 'email',
-            message: 'Please input correct email address',
+            message:
+              'Please input correct email address',
             trigger: ['blur', 'change']
           }
         ]"
       >
-        <el-input v-model="dynamicValidateForm.email" />
+        <el-input
+          v-model="dynamicValidateForm.email"
+        />
       </el-form-item>
       <el-form-item
-        v-for="(domain, index) in dynamicValidateForm.domains"
+        v-for="(
+          domain, index
+        ) in dynamicValidateForm.domains"
         :key="domain.key"
         :label="'Domain' + index"
         :prop="'domains.' + index + '.value'"
@@ -33,13 +50,29 @@
       >
         <el-input v-model="domain.value">
           <template #append>
-            <el-button type="danger" plain class="mt-2" @click.prevent="removeDomain(domain)"> Delete </el-button>
+            <el-button
+              type="danger"
+              plain
+              class="mt-2"
+              @click.prevent="
+                removeDomain(domain)
+              "
+            >
+              Delete
+            </el-button>
           </template>
         </el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm(formRef)"> Submit </el-button>
-        <el-button @click="resetForm(formRef)"> Reset </el-button>
+        <el-button
+          type="primary"
+          @click="submitForm(formRef)"
+        >
+          Submit
+        </el-button>
+        <el-button @click="resetForm(formRef)">
+          Reset
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -69,7 +102,8 @@ interface DomainItem {
 }
 
 const removeDomain = (item: DomainItem) => {
-  const index = dynamicValidateForm.domains.indexOf(item);
+  const index =
+    dynamicValidateForm.domains.indexOf(item);
   if (index !== -1) {
     dynamicValidateForm.domains.splice(index, 1);
   }
@@ -82,7 +116,9 @@ const addDomain = () => {
   });
 };
 
-const submitForm = (formEl: FormInstance | undefined) => {
+const submitForm = (
+  formEl: FormInstance | undefined
+) => {
   if (!formEl) return;
   formEl.validate(valid => {
     if (valid) {
@@ -94,7 +130,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
   });
 };
 
-const resetForm = (formEl: FormInstance | undefined) => {
+const resetForm = (
+  formEl: FormInstance | undefined
+) => {
   if (!formEl) return;
   formEl.resetFields();
 };

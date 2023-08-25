@@ -12,18 +12,27 @@
       </div>
     </div>
     <!-- echarts -->
-    <div id="MaleFemaleRatioChart" class="echarts"></div>
+    <div
+      id="MaleFemaleRatioChart"
+      class="echarts"
+    ></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ECharts, EChartsOption, init } from "echarts";
+import {
+  ECharts,
+  EChartsOption,
+  init
+} from "echarts";
 interface ChartProp {
   man: number;
   woman: number;
 }
 const initChart = (data: ChartProp): ECharts => {
-  const charEle = document.getElementById("MaleFemaleRatioChart") as HTMLElement;
+  const charEle = document.getElementById(
+    "MaleFemaleRatioChart"
+  ) as HTMLElement;
   const charEch: ECharts = init(charEle);
   const option: EChartsOption = {
     xAxis: {
@@ -67,7 +76,8 @@ const initChart = (data: ChartProp): ECharts => {
           fontSize: 12,
           lineHeight: 60,
           color: "rgba(255, 255, 255, 0.9)",
-          formatter: "{value}" + data.woman * 100 + "%",
+          formatter:
+            "{value}" + data.woman * 100 + "%",
           rich: {
             a: {
               color: "transparent",
@@ -147,7 +157,8 @@ defineExpose({
       align-items: center;
       width: 110px;
       height: 115px;
-      background: url("../images/man-bg.png") no-repeat;
+      background: url("../images/man-bg.png")
+        no-repeat;
       background-size: 100% 100%;
       img {
         width: 60px;
@@ -161,7 +172,8 @@ defineExpose({
       }
     }
     .woman {
-      background: url("../images/woman-bg.png") no-repeat;
+      background: url("../images/woman-bg.png")
+        no-repeat;
     }
   }
   .echarts {

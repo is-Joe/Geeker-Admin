@@ -14,21 +14,81 @@
         :columns="columns"
         :request-api="getUserList"
         :init-param="initParam"
-        :search-col="{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3 }"
+        :search-col="{
+          xs: 1,
+          sm: 1,
+          md: 2,
+          lg: 3,
+          xl: 3
+        }"
       >
         <!-- 表格 header 按钮 -->
         <template #tableHeader>
-          <el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')"> 新增用户 </el-button>
-          <el-button type="primary" :icon="Upload" plain @click="batchAdd"> 批量添加用户 </el-button>
-          <el-button type="primary" :icon="Download" plain @click="downloadFile"> 导出用户数据 </el-button>
-          <el-button type="primary" plain @click="toDetail"> To 平级详情页面 </el-button>
+          <el-button
+            type="primary"
+            :icon="CirclePlus"
+            @click="openDrawer('新增')"
+          >
+            新增用户
+          </el-button>
+          <el-button
+            type="primary"
+            :icon="Upload"
+            plain
+            @click="batchAdd"
+          >
+            批量添加用户
+          </el-button>
+          <el-button
+            type="primary"
+            :icon="Download"
+            plain
+            @click="downloadFile"
+          >
+            导出用户数据
+          </el-button>
+          <el-button
+            type="primary"
+            plain
+            @click="toDetail"
+          >
+            To 平级详情页面
+          </el-button>
         </template>
         <!-- 表格操作 -->
         <template #operation="scope">
-          <el-button type="primary" link :icon="View" @click="openDrawer('查看', scope.row)"> 查看 </el-button>
-          <el-button type="primary" link :icon="EditPen" @click="openDrawer('编辑', scope.row)"> 编辑 </el-button>
-          <el-button type="primary" link :icon="Refresh" @click="resetPass(scope.row)"> 重置密码 </el-button>
-          <el-button type="primary" link :icon="Delete" @click="deleteAccount(scope.row)"> 删除 </el-button>
+          <el-button
+            type="primary"
+            link
+            :icon="View"
+            @click="openDrawer('查看', scope.row)"
+          >
+            查看
+          </el-button>
+          <el-button
+            type="primary"
+            link
+            :icon="EditPen"
+            @click="openDrawer('编辑', scope.row)"
+          >
+            编辑
+          </el-button>
+          <el-button
+            type="primary"
+            link
+            :icon="Refresh"
+            @click="resetPass(scope.row)"
+          >
+            重置密码
+          </el-button>
+          <el-button
+            type="primary"
+            link
+            :icon="Delete"
+            @click="deleteAccount(scope.row)"
+          >
+            删除
+          </el-button>
         </template>
       </ProTable>
       <UserDrawer ref="drawerRef" />
@@ -40,15 +100,29 @@
 import { ref, reactive } from "vue";
 import { User } from "@/api/interface";
 import { useRouter } from "vue-router";
-import { ElMessage, ElMessageBox } from "element-plus";
+import {
+  ElMessage,
+  ElMessageBox
+} from "element-plus";
 import { useHandleData } from "@/hooks/useHandleData";
 import { useDownload } from "@/hooks/useDownload";
 import ProTable from "@/components/ProTable/index.vue";
 import TreeFilter from "@/components/TreeFilter/index.vue";
 import ImportExcel from "@/components/ImportExcel/index.vue";
 import UserDrawer from "@/views/proTable/components/UserDrawer.vue";
-import { ProTableInstance, ColumnProps } from "@/components/ProTable/interface";
-import { CirclePlus, Delete, EditPen, Download, Upload, View, Refresh } from "@element-plus/icons-vue";
+import {
+  ProTableInstance,
+  ColumnProps
+} from "@/components/ProTable/interface";
+import {
+  CirclePlus,
+  Delete,
+  EditPen,
+  Download,
+  Upload,
+  View,
+  Refresh
+} from "@element-plus/icons-vue";
 import {
   getUserList,
   deleteUser,
@@ -66,7 +140,9 @@ const router = useRouter();
 
 // 跳转详情页
 const toDetail = () => {
-  router.push(`/proTable/useTreeFilter/detail/123456?params=detail-page`);
+  router.push(
+    `/proTable/useTreeFilter/detail/123456?params=detail-page`
+  );
 };
 
 // 获取 ProTable 元素，调用其获取刷新数据方法（还能获取到当前查询参数，方便导出携带参数）
@@ -85,7 +161,12 @@ const changeTreeFilter = (val: string) => {
 // 表格配置项
 const columns: ColumnProps<User.ResUserList>[] = [
   { type: "index", label: "#", width: 80 },
-  { prop: "username", label: "用户姓名", width: 120, search: { el: "input" } },
+  {
+    prop: "username",
+    label: "用户姓名",
+    width: 120,
+    search: { el: "input" }
+  },
   {
     prop: "gender",
     label: "性别",
@@ -93,7 +174,10 @@ const columns: ColumnProps<User.ResUserList>[] = [
     sortable: true,
     enum: getUserGender,
     search: { el: "select" },
-    fieldNames: { label: "genderLabel", value: "genderValue" }
+    fieldNames: {
+      label: "genderLabel",
+      value: "genderValue"
+    }
   },
   { prop: "idCard", label: "身份证号" },
   { prop: "email", label: "邮箱" },
@@ -106,33 +190,69 @@ const columns: ColumnProps<User.ResUserList>[] = [
     tag: true,
     enum: getUserStatus,
     search: { el: "select" },
-    fieldNames: { label: "userLabel", value: "userStatus" }
+    fieldNames: {
+      label: "userLabel",
+      value: "userStatus"
+    }
   },
-  { prop: "createTime", label: "创建时间", width: 180 },
-  { prop: "operation", label: "操作", width: 330, fixed: "right" }
+  {
+    prop: "createTime",
+    label: "创建时间",
+    width: 180
+  },
+  {
+    prop: "operation",
+    label: "操作",
+    width: 330,
+    fixed: "right"
+  }
 ];
 
 // 删除用户信息
-const deleteAccount = async (params: User.ResUserList) => {
-  await useHandleData(deleteUser, { id: [params.id] }, `删除【${params.username}】用户`);
+const deleteAccount = async (
+  params: User.ResUserList
+) => {
+  await useHandleData(
+    deleteUser,
+    { id: [params.id] },
+    `删除【${params.username}】用户`
+  );
   proTable.value?.getTableList();
 };
 
 // 重置用户密码
-const resetPass = async (params: User.ResUserList) => {
-  await useHandleData(resetUserPassWord, { id: params.id }, `重置【${params.username}】用户密码`);
+const resetPass = async (
+  params: User.ResUserList
+) => {
+  await useHandleData(
+    resetUserPassWord,
+    { id: params.id },
+    `重置【${params.username}】用户密码`
+  );
   proTable.value?.getTableList();
 };
 
 // 导出用户列表
 const downloadFile = async () => {
-  ElMessageBox.confirm("确认导出用户数据?", "温馨提示", { type: "warning" }).then(() =>
-    useDownload(exportUserInfo, "用户列表", proTable.value?.searchParam)
+  ElMessageBox.confirm(
+    "确认导出用户数据?",
+    "温馨提示",
+    {
+      type: "warning"
+    }
+  ).then(() =>
+    useDownload(
+      exportUserInfo,
+      "用户列表",
+      proTable.value?.searchParam
+    )
   );
 };
 
 // 批量添加用户
-const dialogRef = ref<InstanceType<typeof ImportExcel> | null>(null);
+const dialogRef = ref<InstanceType<
+  typeof ImportExcel
+> | null>(null);
 const batchAdd = () => {
   const params = {
     title: "用户",
@@ -144,13 +264,23 @@ const batchAdd = () => {
 };
 
 // 打开 drawer(新增、查看、编辑)
-const drawerRef = ref<InstanceType<typeof UserDrawer> | null>(null);
-const openDrawer = (title: string, row: Partial<User.ResUserList> = {}) => {
+const drawerRef = ref<InstanceType<
+  typeof UserDrawer
+> | null>(null);
+const openDrawer = (
+  title: string,
+  row: Partial<User.ResUserList> = {}
+) => {
   const params = {
     title,
     isView: title === "查看",
     row: { ...row },
-    api: title === "新增" ? addUser : title === "编辑" ? editUser : undefined,
+    api:
+      title === "新增"
+        ? addUser
+        : title === "编辑"
+        ? editUser
+        : undefined,
     getTableList: proTable.value?.getTableList
   };
   drawerRef.value?.acceptParams(params);

@@ -10,20 +10,42 @@
       @click="openDialog"
     >
       <template #append>
-        <el-button :icon="customIcons[iconValue]" />
+        <el-button
+          :icon="customIcons[iconValue]"
+        />
       </template>
     </el-input>
-    <el-dialog v-model="dialogVisible" :title="placeholder" top="50px" width="66%">
-      <el-input v-model="inputValue" placeholder="搜索图标" size="large" :prefix-icon="Icons.Search" />
-      <el-scrollbar v-if="Object.keys(iconsList).length">
+    <el-dialog
+      v-model="dialogVisible"
+      :title="placeholder"
+      top="50px"
+      width="66%"
+    >
+      <el-input
+        v-model="inputValue"
+        placeholder="搜索图标"
+        size="large"
+        :prefix-icon="Icons.Search"
+      />
+      <el-scrollbar
+        v-if="Object.keys(iconsList).length"
+      >
         <div class="icon-list">
-          <div v-for="item in iconsList" :key="item" class="icon-item" @click="selectIcon(item)">
+          <div
+            v-for="item in iconsList"
+            :key="item"
+            class="icon-item"
+            @click="selectIcon(item)"
+          >
             <component :is="item"></component>
             <span>{{ item.name }}</span>
           </div>
         </div>
       </el-scrollbar>
-      <el-empty v-else description="未搜索到您要找的图标~" />
+      <el-empty
+        v-else
+        description="未搜索到您要找的图标~"
+      />
     </el-dialog>
   </div>
 </template>
@@ -39,19 +61,23 @@ interface SelectIconProps {
   placeholder?: string;
 }
 
-const props = withDefaults(defineProps<SelectIconProps>(), {
-  iconValue: "",
-  title: "请选择图标",
-  clearable: true,
-  placeholder: "请选择图标"
-});
+const props = withDefaults(
+  defineProps<SelectIconProps>(),
+  {
+    iconValue: "",
+    title: "请选择图标",
+    clearable: true,
+    placeholder: "请选择图标"
+  }
+);
 
 // 重新接收一下，防止打包后 clearable 报错
 const valueIcon = ref(props.iconValue);
 
 // open Dialog
 const dialogVisible = ref(false);
-const openDialog = () => (dialogVisible.value = true);
+const openDialog = () =>
+  (dialogVisible.value = true);
 
 // 选择图标(触发更新父组件数据)
 const emit = defineEmits(["update:iconValue"]);
@@ -73,14 +99,23 @@ const clearIcon = () => {
 // 监听搜索框值
 const inputValue = ref("");
 const customIcons: { [key: string]: any } = Icons;
-const iconsList = computed((): { [key: string]: any } => {
-  if (!inputValue.value) return Icons;
-  let result: { [key: string]: any } = {};
-  for (const key in customIcons) {
-    if (key.toLowerCase().indexOf(inputValue.value.toLowerCase()) > -1) result[key] = customIcons[key];
+const iconsList = computed(
+  (): { [key: string]: any } => {
+    if (!inputValue.value) return Icons;
+    let result: { [key: string]: any } = {};
+    for (const key in customIcons) {
+      if (
+        key
+          .toLowerCase()
+          .indexOf(
+            inputValue.value.toLowerCase()
+          ) > -1
+      )
+        result[key] = customIcons[key];
+    }
+    return result;
   }
-  return result;
-});
+);
 </script>
 
 <style scoped lang="scss">

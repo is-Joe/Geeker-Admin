@@ -1,6 +1,10 @@
 <template>
   <div class="theme-setting">
-    <i :class="'iconfont icon-zhuti'" class="toolBar-icon" @click="openDrawer"></i>
+    <i
+      :class="'iconfont icon-zhuti'"
+      class="toolBar-icon"
+      @click="openDrawer"
+    ></i>
   </div>
 </template>
 

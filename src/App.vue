@@ -1,11 +1,19 @@
 <template>
-  <el-config-provider :locale="locale" :size="assemblySize" :button="buttonConfig">
+  <el-config-provider
+    :locale="locale"
+    :size="assemblySize"
+    :button="buttonConfig"
+  >
     <router-view></router-view>
   </el-config-provider>
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, computed } from "vue";
+import {
+  onMounted,
+  reactive,
+  computed
+} from "vue";
 import { useI18n } from "vue-i18n";
 import { getBrowserLang } from "@/utils";
 import { useTheme } from "@/hooks/useTheme";
@@ -24,9 +32,13 @@ initTheme();
 // init language
 const i18n = useI18n();
 onMounted(() => {
-  const language = globalStore.language ?? getBrowserLang();
+  const language =
+    globalStore.language ?? getBrowserLang();
   i18n.locale.value = language;
-  globalStore.setGlobalState("language", language as LanguageType);
+  globalStore.setGlobalState(
+    "language",
+    language as LanguageType
+  );
 });
 
 // element language
@@ -37,8 +49,12 @@ const locale = computed(() => {
 });
 
 // element assemblySize
-const assemblySize = computed(() => globalStore.assemblySize);
+const assemblySize = computed(
+  () => globalStore.assemblySize
+);
 
 // element button config
-const buttonConfig = reactive({ autoInsertSpace: false });
+const buttonConfig = reactive({
+  autoInsertSpace: false
+});
 </script>

@@ -1,20 +1,38 @@
 <template>
-  <template v-for="subItem in menuList" :key="subItem.path">
-    <el-sub-menu v-if="subItem.children?.length" :index="subItem.path">
+  <template
+    v-for="subItem in menuList"
+    :key="subItem.path"
+  >
+    <el-sub-menu
+      v-if="subItem.children?.length"
+      :index="subItem.path"
+    >
       <template #title>
         <el-icon>
-          <component :is="subItem.meta.icon"></component>
+          <component
+            :is="subItem.meta.icon"
+          ></component>
         </el-icon>
-        <span class="sle">{{ subItem.meta.title }}</span>
+        <span class="sle">{{
+          subItem.meta.title
+        }}</span>
       </template>
       <SubMenu :menu-list="subItem.children" />
     </el-sub-menu>
-    <el-menu-item v-else :index="subItem.path" @click="handleClickMenu(subItem)">
+    <el-menu-item
+      v-else
+      :index="subItem.path"
+      @click="handleClickMenu(subItem)"
+    >
       <el-icon>
-        <component :is="subItem.meta.icon"></component>
+        <component
+          :is="subItem.meta.icon"
+        ></component>
       </el-icon>
       <template #title>
-        <span class="sle">{{ subItem.meta.title }}</span>
+        <span class="sle">{{
+          subItem.meta.title
+        }}</span>
       </template>
     </el-menu-item>
   </template>
@@ -26,22 +44,32 @@ import { useRouter } from "vue-router";
 defineProps<{ menuList: Menu.MenuOptions[] }>();
 
 const router = useRouter();
-const handleClickMenu = (subItem: Menu.MenuOptions) => {
-  if (subItem.meta.isLink) return window.open(subItem.meta.isLink, "_blank");
+const handleClickMenu = (
+  subItem: Menu.MenuOptions
+) => {
+  if (subItem.meta.isLink)
+    return window.open(
+      subItem.meta.isLink,
+      "_blank"
+    );
   router.push(subItem.path);
 };
 </script>
 
 <style lang="scss">
 .el-sub-menu .el-sub-menu__title:hover {
-  color: var(--el-menu-hover-text-color) !important;
+  color: var(
+    --el-menu-hover-text-color
+  ) !important;
   background-color: transparent !important;
 }
 .el-menu--collapse {
   .is-active {
     .el-sub-menu__title {
       color: #ffffff !important;
-      background-color: var(--el-color-primary) !important;
+      background-color: var(
+        --el-color-primary
+      ) !important;
     }
   }
 }
@@ -51,7 +79,9 @@ const handleClickMenu = (subItem: Menu.MenuOptions) => {
   }
   &.is-active {
     color: var(--el-menu-active-color) !important;
-    background-color: var(--el-menu-active-bg-color) !important;
+    background-color: var(
+      --el-menu-active-bg-color
+    ) !important;
     &::before {
       position: absolute;
       top: 0;

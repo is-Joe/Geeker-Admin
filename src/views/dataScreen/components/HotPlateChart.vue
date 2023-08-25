@@ -9,8 +9,17 @@
 </template>
 
 <script setup lang="ts">
-import { ECharts, EChartsOption, init } from "echarts";
-import { ranking1, ranking2, ranking3, ranking4 } from "../assets/ranking-icon";
+import {
+  ECharts,
+  EChartsOption,
+  init
+} from "echarts";
+import {
+  ranking1,
+  ranking2,
+  ranking3,
+  ranking4
+} from "../assets/ranking-icon";
 interface ChartProp {
   name: string;
   value: number;
@@ -18,7 +27,9 @@ interface ChartProp {
   maxValue: number;
 }
 const initChart = (data: any = {}): ECharts => {
-  const charEle = document.getElementById("HotPlateChart") as HTMLElement;
+  const charEle = document.getElementById(
+    "HotPlateChart"
+  ) as HTMLElement;
   const charEch: ECharts = init(charEle);
   const option: EChartsOption = {
     grid: {
@@ -54,7 +65,9 @@ const initChart = (data: any = {}): ECharts => {
     yAxis: [
       {
         show: true,
-        data: data.data.map((val: ChartProp) => val.name),
+        data: data.data.map(
+          (val: ChartProp) => val.name
+        ),
         inverse: true,
         axisLine: {
           show: false
@@ -68,9 +81,26 @@ const initChart = (data: any = {}): ECharts => {
         axisLabel: {
           color: "#fff",
           formatter: function (value: any) {
-            let str = value.length > 6 ? value.slice(0, 6) + "..." : value;
-            let index = data.data.map((item: ChartProp) => item.name).indexOf(value) + 1;
-            return ["{" + (index > 3 ? "lg" : "lg" + index) + "|NO." + index + "}", "{title|" + str + "}"].join(" ");
+            let str =
+              value.length > 6
+                ? value.slice(0, 6) + "..."
+                : value;
+            let index =
+              data.data
+                .map(
+                  (item: ChartProp) => item.name
+                )
+                .indexOf(value) + 1;
+            return [
+              "{" +
+                (index > 3
+                  ? "lg"
+                  : "lg" + index) +
+                "|NO." +
+                index +
+                "}",
+              "{title|" + str + "}"
+            ].join(" ");
           },
           rich: {
             lg1: {
@@ -135,7 +165,9 @@ const initChart = (data: any = {}): ECharts => {
           // align: "right",
           margin: 20,
           formatter: (value: any) => {
-            return value >= 10000 ? (value / 10000).toFixed(2) + "w" : value;
+            return value >= 10000
+              ? (value / 10000).toFixed(2) + "w"
+              : value;
           }
         },
         axisLine: {
@@ -161,7 +193,9 @@ const initChart = (data: any = {}): ECharts => {
           borderRadius: 30,
           color: function (params) {
             let num = data.colors.length;
-            return data.colors[params.dataIndex % num];
+            return data.colors[
+              params.dataIndex % num
+            ];
           }
         },
         label: {
@@ -213,7 +247,8 @@ defineExpose({
   height: 36px;
   margin: 10px 10px 0;
   line-height: 36px;
-  background: url("../images/rankingChart-bg.png") no-repeat;
+  background: url("../images/rankingChart-bg.png")
+    no-repeat;
   background-size: 100% 100%;
   span {
     width: 18%;

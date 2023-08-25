@@ -1,7 +1,18 @@
 <template>
   <div class="menu-search-dialog">
-    <i :class="'iconfont icon-sousuo'" class="toolBar-icon" @click="handleOpen"></i>
-    <el-dialog v-model="isShowSearch" destroy-on-close :modal="false" :show-close="false" fullscreen @click="closeSearch">
+    <i
+      :class="'iconfont icon-sousuo'"
+      class="toolBar-icon"
+      @click="handleOpen"
+    ></i>
+    <el-dialog
+      v-model="isShowSearch"
+      destroy-on-close
+      :modal="false"
+      :show-close="false"
+      fullscreen
+      @click="closeSearch"
+    >
       <el-autocomplete
         ref="menuInputRef"
         v-model="searchMenu"
@@ -18,7 +29,9 @@
         </template>
         <template #default="{ item }">
           <el-icon>
-            <component :is="item.meta.icon"></component>
+            <component
+              :is="item.meta.icon"
+            ></component>
           </el-icon>
           <span> {{ item.meta.title }} </span>
         </template>
@@ -34,10 +47,21 @@ import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/modules/auth";
 const router = useRouter();
 const authStore = useAuthStore();
-const menuList = computed(() => authStore.flatMenuListGet.filter(item => !item.meta.isHide));
+const menuList = computed(() =>
+  authStore.flatMenuListGet.filter(
+    item => !item.meta.isHide
+  )
+);
 
-const searchMenuList = (queryString: string, cb: Function) => {
-  const results = queryString ? menuList.value.filter(filterNodeMethod(queryString)) : menuList.value;
+const searchMenuList = (
+  queryString: string,
+  cb: Function
+) => {
+  const results = queryString
+    ? menuList.value.filter(
+        filterNodeMethod(queryString)
+      )
+    : menuList.value;
   cb(results);
 };
 
@@ -60,19 +84,29 @@ const closeSearch = () => {
 };
 
 // 筛选菜单
-const filterNodeMethod = (queryString: string) => {
+const filterNodeMethod = (
+  queryString: string
+) => {
   return (restaurant: Menu.MenuOptions) => {
     return (
-      restaurant.path.toLowerCase().indexOf(queryString.toLowerCase()) > -1 ||
-      restaurant.meta.title.toLowerCase().indexOf(queryString.toLowerCase()) > -1
+      restaurant.path
+        .toLowerCase()
+        .indexOf(queryString.toLowerCase()) >
+        -1 ||
+      restaurant.meta.title
+        .toLowerCase()
+        .indexOf(queryString.toLowerCase()) > -1
     );
   };
 };
 
 // 点击菜单跳转
-const handleClickMenu = (menuItem: Menu.MenuOptions | Record<string, any>) => {
+const handleClickMenu = (
+  menuItem: Menu.MenuOptions | Record<string, any>
+) => {
   searchMenu.value = "";
-  if (menuItem.meta.isLink) window.open(menuItem.meta.isLink, "_blank");
+  if (menuItem.meta.isLink)
+    window.open(menuItem.meta.isLink, "_blank");
   else router.push(menuItem.path);
   closeSearch();
 };

@@ -7,7 +7,12 @@
       :closable="false"
     />
     <div id="Geeker">
-      <el-button type="primary" @click.prevent.stop="guide"> 打开引导页 🤹‍♂️ </el-button>
+      <el-button
+        type="primary"
+        @click.prevent.stop="guide"
+      >
+        打开引导页 🤹‍♂️
+      </el-button>
     </div>
   </div>
 </template>
@@ -41,7 +46,8 @@ const steps = [
     element: "#breadcrumb",
     popover: {
       title: "Breadcrumb",
-      description: "Indicate the current page location",
+      description:
+        "Indicate the current page location",
       position: "right"
     }
   },
@@ -65,7 +71,8 @@ const steps = [
     element: "#searchMenu",
     popover: {
       title: "Page Search",
-      description: "Page search, quick navigation",
+      description:
+        "Page search, quick navigation",
       position: "left"
     }
   },
@@ -81,7 +88,8 @@ const steps = [
     element: "#message",
     popover: {
       title: "Message Notification",
-      description: "Can receive company information",
+      description:
+        "Can receive company information",
       position: "left"
     }
   },
@@ -89,7 +97,8 @@ const steps = [
     element: "#fullscreen",
     popover: {
       title: "Full Screen",
-      description: "Full Screen, Exit The Full Screen Page",
+      description:
+        "Full Screen, Exit The Full Screen Page",
       position: "left"
     }
   }

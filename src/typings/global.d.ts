@@ -34,19 +34,31 @@ declare namespace File {
     | "image/webp"
     | "image/x-icon";
 
-  type ExcelMimeType = "application/vnd.ms-excel" | "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+  type ExcelMimeType =
+    | "application/vnd.ms-excel"
+    | "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 }
 
 /* Vite */
-declare type Recordable<T = any> = Record<string, T>;
+declare type Recordable<T = any> = Record<
+  string,
+  T
+>;
 
 declare interface ViteEnv {
-  VITE_USER_NODE_ENV: "development" | "production" | "test";
+  VITE_USER_NODE_ENV:
+    | "development"
+    | "production"
+    | "test";
   VITE_GLOB_APP_TITLE: string;
   VITE_PORT: number;
   VITE_OPEN: boolean;
   VITE_REPORT: boolean;
-  VITE_BUILD_COMPRESS: "gzip" | "brotli" | "gzip,brotli" | "none";
+  VITE_BUILD_COMPRESS:
+    | "gzip"
+    | "brotli"
+    | "gzip,brotli"
+    | "none";
   VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE: boolean;
   VITE_DROP_CONSOLE: boolean;
   VITE_PWA: boolean;

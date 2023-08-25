@@ -1,6 +1,10 @@
 <template>
   <div class="card content-box">
-    <iframe src="https://cn.bing.com/" frameborder="0" class="full-iframe"></iframe>
+    <iframe
+      src="https://cn.bing.com/"
+      frameborder="0"
+      class="full-iframe"
+    ></iframe>
   </div>
 </template>
 
