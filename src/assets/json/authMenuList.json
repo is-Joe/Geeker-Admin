@@ -75,6 +75,37 @@
           ]
         },
         {
+          "path": "/proTable/dev_useProTable",
+          "name": "dev_useProTable",
+          "component": "/proTable/useProTable/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "使用 dev_ProTable",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          },
+          "children": [
+            {
+              "path": "/proTable/dev_useProTable/detail/:id",
+              "name": "dev_useProTableDetail",
+              "component": "/proTable/dev_useProTable/detail",
+              "meta": {
+                "icon": "Menu",
+                "title": "ProTable 详情",
+                "activeMenu": "/proTable/useProTable",
+                "isLink": "",
+                "isHide": true,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            }
+          ]
+        },
+        {
           "path": "/proTable/useTreeFilter",
           "name": "useTreeFilter",
           "component": "/proTable/useTreeFilter/index",
